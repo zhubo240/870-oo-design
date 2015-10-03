@@ -1,0 +1,52 @@
+<?xml version = "1.0"?>
+<GameData>
+<screenTitle>Go Ghosts!</screenTitle>
+<maxStringSize>50</maxStringSize>
+<username>Bo Zhu</username>
+<frameMax>200</frameMax>
+
+<frameCap>60</frameCap>
+<framesAreCapped>true</framesAreCapped>
+
+<view>
+  <width>854</width>
+  <height>480</height>
+</view>
+
+<world>
+  <width>854</width>
+  <height>523</height>
+</world>
+
+<back>
+  <red>255</red>
+  <green>255</green>
+  <blue>255</blue>
+  <file>images/castle.bmp</file>
+  <width>854</width>
+  <height>523</height>
+</back>
+
+<font name="font">
+  <file>font/dyslexic-bold.otf</file>
+  <size>16</size>
+  <red>0</red>
+  <green>0</green>
+  <blue>0</blue>
+  <unused>0</unused>
+</font>
+
+<greenorb>
+  <file>images/ghost.bmp</file>
+  <count>10</count>
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>32</width>
+  <height>32</height>
+  <startLoc x="320" y="240"/>
+  <speedX>5</speedX>
+  <speedY>5</speedY>
+  <transparency>true</transparency>
+</greenorb>
+
+</GameData>
