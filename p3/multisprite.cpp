@@ -9,6 +9,7 @@
 
 
 void MultiSprite::advanceFrame(Uint32 ticks) {
+	//TODO : change another frame when the time more than interval.
 	timeSinceLastFrame += ticks;
 	if (timeSinceLastFrame > frameInterval) {
     currentFrame = (currentFrame+1) % numberOfFrames;
@@ -56,11 +57,6 @@ MultiSprite::MultiSprite(const string& name) :
 {
 }
 
-//MultiSprite::MultiSprite(const MultiSprite& msp) {
-//}
-
-MultiSprite& MultiSprite::operator =(const MultiSprite&) {
-}
 
 void MultiSprite::draw() const { 
   Uint32 x = static_cast<Uint32>(X());
@@ -70,6 +66,25 @@ void MultiSprite::draw() const {
 
 void MultiSprite::update(Uint32 ticks) { 
   advanceFrame(ticks);
+  //TODO: why this Sprite do not move.
+  move(ticks);
 }
 
+void MultiSprite::move(Uint32 ticks) {
+	Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
+		setPosition(getPosition() + incr);
 
+		if (Y() < 0) {
+			velocityY(abs(velocityY()));
+		}
+		if (Y() > worldHeight - frameHeight) {
+			velocityY(-abs(velocityY()));
+		}
+
+		if (X() < 0) {
+			velocityX(abs(velocityX()));
+		}
+		if (X() > worldWidth - frameWidth) {
+			velocityX(-abs(velocityX()));
+		}
+}

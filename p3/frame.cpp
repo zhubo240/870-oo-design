@@ -14,7 +14,14 @@ Frame::Frame( const std::string& name, SDL_Surface* surf ) :
   height(Gamedata::getInstance().getXmlInt(name+"/height")),
   sourceX(0),
   sourceY(0)
-{ }
+{
+	//TODO : teacher said that frame is just a wrapper of SDL_Surface
+	//when build frame, init the width and height
+	//but read SDL_Surface, and its h, w is zero?
+
+	// no, when init surface, it h & w have been filled !
+	std::cout << this->surface->h << " " << this->height << std::endl;
+}
 
 Frame::Frame( SDL_Surface* spr, Uint16 w, Uint16 h,
               Sint16 src_x, Sint16 src_y) :

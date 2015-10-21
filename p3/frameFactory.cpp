@@ -1,10 +1,40 @@
 #include "frameFactory.h"
+
+#include <SDL/SDL_stdinc.h>
+#include <SDL/SDL_video.h>
+#include <iostream>
+#include <utility>
+
 #include "extractSurface.h"
 #include "ioManager.h"
-#include "vector2f.h"
+
+
 
 FrameFactory::~FrameFactory() {
 	std::cout << "The FrameFactory has leaks" << std::endl;
+	for(std::map<string, SDL_Surface*>::iterator iter;
+				iter != this->surfaces.end(); ++iter){
+				SDL_FreeSurface(iter->second);
+		}
+
+	for(std::map<string, std::vector<SDL_Surface*> >::iterator iter;
+			iter != this->multiSurfaces.end(); ++iter){
+		for(unsigned j = 0; j < iter->second.size(); j++){
+			SDL_FreeSurface(iter->second[j]);
+		}
+	}
+
+	for(std::map<string, Frame*>::iterator iter;
+					iter != this->frames.end(); ++iter){
+					delete iter->second;
+			}
+
+		for(std::map<string, std::vector<Frame*> >::iterator iter;
+				iter != this->multiFrames.end(); ++iter){
+			for(unsigned j = 0; j < iter->second.size(); j++){
+				delete iter->second[j];
+			}
+		}
 }
 
 FrameFactory& FrameFactory::getInstance() {
@@ -13,7 +43,7 @@ FrameFactory& FrameFactory::getInstance() {
 }
 
 Frame* FrameFactory::getFrame(const std::string& name) {
-	//TODO : the frame loaded have no w, h attr ?
+
 	std::map<std::string, Frame*>::const_iterator pos = frames.find(name);
 	if (pos == frames.end()) {
 		SDL_Surface * const surface = IOManager::getInstance().loadAndSet(

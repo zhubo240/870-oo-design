@@ -15,8 +15,9 @@ private:
   //SDL_Surface* const surface;
   Frame* frame;
   int factor;
-  unsigned frameHeight;
   unsigned frameWidth;
+  unsigned frameHeight;
+
 
 
   float viewX;

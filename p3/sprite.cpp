@@ -54,26 +54,31 @@ void Sprite::draw() const {
 	frame->draw(x, y);
 }
 
+
 int Sprite::getDistance(const Sprite *obj) const {
 	return hypot(X() - obj->X(), Y() - obj->Y());
 }
 
 void Sprite::update(Uint32 ticks) {
-	Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
-	setPosition(getPosition() + incr);
-
-	if (Y() < 0) {
-		velocityY(abs(velocityY()));
-	}
-	if (Y() > worldHeight - frameHeight) {
-		velocityY(-abs(velocityY()));
-	}
-
-	if (X() < 0) {
-		velocityX(abs(velocityX()));
-	}
-	if (X() > worldWidth - frameWidth) {
-		velocityX(-abs(velocityX()));
-	}
+	move(ticks);
 }
 
+void Sprite::move(Uint32 ticks) {
+	Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
+		setPosition(getPosition() + incr);
+
+		if (Y() < 0) {
+			velocityY(abs(velocityY()));
+		}
+		if (Y() > worldHeight - frameHeight) {
+			velocityY(-abs(velocityY()));
+		}
+
+		if (X() < 0) {
+			velocityX(abs(velocityX()));
+		}
+		if (X() > worldWidth - frameWidth) {
+			velocityX(-abs(velocityX()));
+		}
+
+}

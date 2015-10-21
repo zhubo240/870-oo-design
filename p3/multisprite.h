@@ -12,6 +12,7 @@ public:
   MultiSprite(const string& name);
   virtual ~MultiSprite() { } 
 
+
   virtual void draw() const;
   virtual void update(Uint32 ticks);
   virtual const Frame* getFrame() const { 
@@ -30,8 +31,11 @@ protected:
   int frameWidth;
   int frameHeight;
 
-  void advanceFrame(Uint32 ticks);
+  virtual void advanceFrame(Uint32 ticks);
   MultiSprite(const MultiSprite&);
   MultiSprite& operator=(const MultiSprite&);
+
+  void move(Uint32 ticks);
+
 };
 #endif

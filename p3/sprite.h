@@ -19,6 +19,8 @@ public:
 
   virtual void update(Uint32 ticks);
 
+  virtual void move(Uint32 ticks);
+
 private:
   const Frame * frame;
   int frameWidth;

@@ -6,15 +6,18 @@
 #include <SDL/SDL_keysym.h>
 #include <SDL/SDL_stdinc.h>
 #include <SDL/SDL_video.h>
+#include <cmath>
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
 #include <string>
 
+#include "drawable.h"
 #include "gamedata.h"
-#include "multisprite.h"
 #include "sprite.h"
+#include "TwoWaySprite.h"
+#include "vector2f.h"
 
 Manager::~Manager() {
 	std::list<Drawable*>::const_iterator ptr = sprites.begin();
@@ -25,24 +28,11 @@ Manager::~Manager() {
 }
 
 Manager::Manager() :
-		env(SDL_putenv(const_cast<char*>("SDL_VIDEO_CENTERED=center"))),
-		io(IOManager::getInstance()), clock(Clock::getInstance()),
-				screen(io.getScreen()),
-				world("back", Gamedata::getInstance().getXmlInt("back/factor")),
-				viewport(Viewport::getInstance()),
-
-//		orbSurface(
-//				io.loadAndSet(
-//						Gamedata::getInstance().getXmlStr("greenorb/file"),
-//						Gamedata::getInstance().getXmlBool(
-//								"greenorb/transparency"))), orbFrame(
-//				new Frame("greenorb", orbSurface)),
-//
-//		starSurface(
-//				io.loadAndSet(
-//						Gamedata::getInstance().getXmlStr("spinstar/file"),
-//						Gamedata::getInstance().getXmlBool(
-//								"spinstar/transparency"))), starFrames(), surfaces(),
+		env(SDL_putenv(const_cast<char*>("SDL_VIDEO_CENTERED=center"))), io(
+				IOManager::getInstance()), clock(Clock::getInstance()), screen(
+				io.getScreen()), world("back",
+				Gamedata::getInstance().getXmlInt("back/factor")), viewport(
+				Viewport::getInstance()),
 
 		sprites(), currentSprite(),
 
@@ -55,33 +45,29 @@ Manager::Manager() :
 	}
 	SDL_WM_SetCaption(title.c_str(), NULL);
 	atexit(SDL_Quit);
-/*
-	SDL_Surface* surface = IOManager::getInstance().loadAndSet(
-			Gamedata::getInstance().getXmlStr("spinstar/file"), true);
-	unsigned numberOfFrames = Gamedata::getInstance().getXmlInt(
-			"spinstar/frames");
-	std::vector<SDL_Surface*> surfaces;
-	starFrames.reserve(numberOfFrames);
-	Uint16 srcX = Gamedata::getInstance().getXmlInt("spinstar/srcX");
-	Uint16 srcY = Gamedata::getInstance().getXmlInt("spinstar/srcY");
-	Uint16 width = Gamedata::getInstance().getXmlInt("spinstar/width");
-	Uint16 height = Gamedata::getInstance().getXmlInt("spinstar/height");
-	SDL_Surface* surf;
-	for (unsigned i = 0; i < numberOfFrames; ++i) {
-		unsigned frameX = i * width + srcX;
-		surf = ExtractSurface::getInstance().get(surface, width, height, frameX,
-				srcY);
-		surfaces.push_back(surf);
-		starFrames.push_back(new Frame("spinstar", surf));
-	}
-	SDL_FreeSurface(surface);
-*/
+
 	//TODO : need to change the constructor.
 	//why using the container ?
 
-	sprites.push_back(new MultiSprite("spinstar"));
-	sprites.push_back(
-			new Sprite("greenorb"));
+	//three triangles
+	int n = Gamedata::getInstance().getXmlInt("triangle/count");
+	MultiSprite tmp("triangle");
+	Vector2f speed = tmp.getVelocity();
+	double d = speed.magnitude();
+	double l = 3.14 * d;
+	double delta = l / n;
+	for (int i = 0; i < n; i++) {
+		MultiSprite* triangle = new MultiSprite("triangle");
+
+		double seta = i * delta;
+		double x = triangle->getVelocity().dot(Vector2f(cos(seta), -sin(seta)));
+		double y = triangle->getVelocity().dot(Vector2f(sin(seta), cos(seta)));
+		triangle->setVelocity(Vector2f(x, y));
+		this->sprites.push_back(triangle);
+	}
+
+	sprites.push_back(new Sprite("ghost"));
+	sprites.push_back(new TwoWaySprite("car"));
 
 	currentSprite = sprites.begin();
 	viewport.setObjectToTrack(*currentSprite);

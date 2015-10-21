@@ -2,13 +2,13 @@
 <GameData>
 <!-- screenTitle is also used to identify you and your animation. 
      So make sure to include your name as part of the screenTitle -->
-<screenTitle>Brian Malloy's Star Animation</screenTitle>
+<screenTitle>Bo Zhu's Project 3</screenTitle>
 <maxStringSize>50</maxStringSize>
 
 <frameCap>60</frameCap>
 <framesAreCapped>true</framesAreCapped>
 <frameMax>300</frameMax>
-<username>malloy</username>
+<username>bzhu2</username>
 
 <view>
   <width>854</width>
@@ -48,32 +48,48 @@
   <unused>0</unused>
 </font>
 
-<spinstar>
-  <file>images/spinstar.png</file>
+<triangle>
+  <file>images/triangle.png</file>
   <startLoc x="120" y="140"/>
   <frames>4</frames>
   <frameInterval>20</frameInterval>
    <srcX>0</srcX>
   <srcY>0</srcY>
-  <width>32</width>
-  <height>32</height>
+  <width>100</width>
+  <height>100</height>
   <speedX>-200</speedX>
   <speedY>200</speedY>
+  <count>5</count>
   <transparency>true</transparency>
-</spinstar>
+</triangle>
 
-<greenorb>
-  <file>images/greenball.bmp</file>
+<car>
+<file>images/cars.png</file>
+  <startLoc x="120" y="140"/>
+  <frames>6</frames>
+   <numFramesOneDir>3</numFramesOneDir>
+  <frameInterval>20</frameInterval>
+   <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>200</width>
+  <height>88</height>
+    <speedX>200</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</car>
+
+<ghost>
+  <file>images/ghost.bmp</file>
 <x>100</x>
 <y>100</y>
   <srcX>0</srcX>
   <srcY>0</srcY>
-  <width>32</width>
-  <height>32</height>
+  <width>37</width>
+  <height>34</height>
   <startLoc x="320" y="240"/>
   <speedX>175</speedX>
   <speedY>175</speedY>
   <transparency>true</transparency>
-</greenorb>
+</ghost>
 
 </GameData>
