@@ -22,11 +22,6 @@ private:
   World world;
   Viewport& viewport;
 
-//  SDL_Surface* orbSurface;
-// const Frame * const orbFrame;
-//  SDL_Surface* starSurface;
-//  std::vector<Frame*> starFrames;
-//  std::vector<SDL_Surface*> surfaces;
 
   // TODO : why sprite and currentSprite are list ?
   std::list<Drawable*> sprites;

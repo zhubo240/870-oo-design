@@ -8,33 +8,31 @@
 #include "extractSurface.h"
 #include "ioManager.h"
 
-
-
 FrameFactory::~FrameFactory() {
 	std::cout << "The FrameFactory has leaks" << std::endl;
-	for(std::map<string, SDL_Surface*>::iterator iter;
-				iter != this->surfaces.end(); ++iter){
-				SDL_FreeSurface(iter->second);
-		}
+	for (std::map<string, SDL_Surface*>::iterator iter;
+			iter != this->surfaces.end(); ++iter) {
+		SDL_FreeSurface(iter->second);
+	}
 
-	for(std::map<string, std::vector<SDL_Surface*> >::iterator iter;
-			iter != this->multiSurfaces.end(); ++iter){
-		for(unsigned j = 0; j < iter->second.size(); j++){
+	for (std::map<string, std::vector<SDL_Surface*> >::iterator iter;
+			iter != this->multiSurfaces.end(); ++iter) {
+		for (unsigned j = 0; j < iter->second.size(); j++) {
 			SDL_FreeSurface(iter->second[j]);
 		}
 	}
 
-	for(std::map<string, Frame*>::iterator iter;
-					iter != this->frames.end(); ++iter){
-					delete iter->second;
-			}
+	for (std::map<string, Frame*>::iterator iter; iter != this->frames.end();
+			++iter) {
+		delete iter->second;
+	}
 
-		for(std::map<string, std::vector<Frame*> >::iterator iter;
-				iter != this->multiFrames.end(); ++iter){
-			for(unsigned j = 0; j < iter->second.size(); j++){
-				delete iter->second[j];
-			}
+	for (std::map<string, std::vector<Frame*> >::iterator iter;
+			iter != this->multiFrames.end(); ++iter) {
+		for (unsigned j = 0; j < iter->second.size(); j++) {
+			delete iter->second[j];
 		}
+	}
 }
 
 FrameFactory& FrameFactory::getInstance() {
