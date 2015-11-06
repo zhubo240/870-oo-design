@@ -23,6 +23,7 @@ public:
 
 private:
   unsigned int ticks;
+  int cap;
   unsigned int totalTicks;
   bool started;
   bool paused;

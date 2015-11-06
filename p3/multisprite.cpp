@@ -9,7 +9,6 @@
 
 
 void MultiSprite::advanceFrame(Uint32 ticks) {
-	//TODO : change another frame when the time more than interval.
 	timeSinceLastFrame += ticks;
 	if (timeSinceLastFrame > frameInterval) {
     currentFrame = (currentFrame+1) % numberOfFrames;
@@ -66,7 +65,6 @@ void MultiSprite::draw() const {
 
 void MultiSprite::update(Uint32 ticks) { 
   advanceFrame(ticks);
-  //TODO: why this Sprite do not move.
   move(ticks);
 }
 

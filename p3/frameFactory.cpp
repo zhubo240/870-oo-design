@@ -9,26 +9,27 @@
 #include "ioManager.h"
 
 FrameFactory::~FrameFactory() {
-	std::cout << "The FrameFactory has leaks" << std::endl;
-	for (std::map<string, SDL_Surface*>::iterator iter;
+	for (std::map<string, SDL_Surface*>::iterator iter = this->surfaces.begin();
 			iter != this->surfaces.end(); ++iter) {
 		SDL_FreeSurface(iter->second);
 	}
 
-	for (std::map<string, std::vector<SDL_Surface*> >::iterator iter;
-			iter != this->multiSurfaces.end(); ++iter) {
+	for (std::map<string, std::vector<SDL_Surface*> >::iterator iter =
+			this->multiSurfaces.begin(); iter != this->multiSurfaces.end();
+			++iter) {
 		for (unsigned j = 0; j < iter->second.size(); j++) {
 			SDL_FreeSurface(iter->second[j]);
 		}
 	}
 
-	for (std::map<string, Frame*>::iterator iter; iter != this->frames.end();
-			++iter) {
+	for (std::map<string, Frame*>::iterator iter = this->frames.begin();
+			iter != this->frames.end(); ++iter) {
 		delete iter->second;
 	}
 
-	for (std::map<string, std::vector<Frame*> >::iterator iter;
-			iter != this->multiFrames.end(); ++iter) {
+	for (std::map<string, std::vector<Frame*> >::iterator iter =
+			this->multiFrames.begin(); iter != this->multiFrames.end();
+			++iter) {
 		for (unsigned j = 0; j < iter->second.size(); j++) {
 			delete iter->second[j];
 		}
@@ -48,7 +49,6 @@ Frame* FrameFactory::getFrame(const std::string& name) {
 				gdata.getXmlStr(name + "/file"),
 				gdata.getXmlBool(name + "/transparency"));
 
-		//TODO : why have surface map & frame map ?
 		surfaces[name] = surface;
 		Frame * const frame = new Frame(name, surface);
 		frames[name] = frame;

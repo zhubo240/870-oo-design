@@ -11,8 +11,6 @@ public:
   void draw() const;
 private:
   const IOManager& io;
-  //TODO : not init it , it is a error
-  //SDL_Surface* const surface;
   Frame* frame;
   int factor;
   unsigned frameWidth;

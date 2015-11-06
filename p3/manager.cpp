@@ -30,8 +30,9 @@ Manager::~Manager() {
 Manager::Manager() :
 		env(SDL_putenv(const_cast<char*>("SDL_VIDEO_CENTERED=center"))), io(
 				IOManager::getInstance()), clock(Clock::getInstance()), screen(
-				io.getScreen()), world("back",
-				Gamedata::getInstance().getXmlInt("back/factor")), viewport(
+				io.getScreen()), worldFg("back",
+				Gamedata::getInstance().getXmlInt("back/factor")),worldBg("back",
+						Gamedata::getInstance().getXmlInt("back/factor")), viewport(
 				Viewport::getInstance()),
 
 		sprites(), currentSprite(),
@@ -46,10 +47,13 @@ Manager::Manager() :
 	SDL_WM_SetCaption(title.c_str(), NULL);
 	atexit(SDL_Quit);
 
-	//TODO : need to change the constructor.
-	//why using the container ?
+	//two way
+	sprites.push_back(new TwoWaySprite("car"));
 
-	//three triangles
+	//sprite
+	sprites.push_back(new Sprite("ghost"));
+
+	//sprite
 	int n = Gamedata::getInstance().getXmlInt("triangle/count");
 	MultiSprite tmp("triangle");
 	Vector2f speed = tmp.getVelocity();
@@ -66,15 +70,12 @@ Manager::Manager() :
 		this->sprites.push_back(triangle);
 	}
 
-	sprites.push_back(new Sprite("ghost"));
-	sprites.push_back(new TwoWaySprite("car"));
-
 	currentSprite = sprites.begin();
 	viewport.setObjectToTrack(*currentSprite);
 }
 
 void Manager::draw() const {
-	world.draw();
+	worldFg.draw();
 	clock.draw();
 	std::list<Drawable*>::const_iterator ptr = sprites.begin();
 	while (ptr != sprites.end()) {
@@ -119,7 +120,7 @@ void Manager::update() {
 	if (makeVideo && frameCount < frameMax) {
 		makeFrame();
 	}
-	world.update();
+	worldFg.update();
 	viewport.update(); // always update viewport last
 }
 
@@ -155,7 +156,17 @@ void Manager::play() {
 				if (keystate[SDLK_F4] && !makeVideo) {
 					std::cout << "Making video frames" << std::endl;
 					makeVideo = true;
+//				}if (keystate[SDLK_w]){
+//					//update sprite the
+//				}if (keystate[SDLK_s]){
+//					//
+//				}
+				if (keystate[SDLK_a]){
+
+				}if (keystate[SDLK_d]){
+
 				}
+
 			}
 		}
 		draw();

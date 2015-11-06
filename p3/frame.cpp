@@ -15,12 +15,6 @@ Frame::Frame( const std::string& name, SDL_Surface* surf ) :
   sourceX(0),
   sourceY(0)
 {
-	//TODO : teacher said that frame is just a wrapper of SDL_Surface
-	//when build frame, init the width and height
-	//but read SDL_Surface, and its h, w is zero?
-
-	// no, when init surface, it h & w have been filled !
-	std::cout << this->surface->h << " " << this->height << std::endl;
 }
 
 Frame::Frame( SDL_Surface* spr, Uint16 w, Uint16 h,
@@ -55,9 +49,7 @@ void Frame::draw(Sint16 x, Sint16 y) const {
   SDL_Rect src = { sourceX, sourceY, width, height };    
   x -= Viewport::getInstance().X();
   y -= Viewport::getInstance().Y();
-//  std::cout << "viewport x = " << Viewport::getInstance().X() << ", viewport y = " <<
-//		  Viewport::getInstance().Y() << std::endl;
-//  std::cout << "x = " << x  << ", y = " << y << std::endl;
+
   SDL_Rect dest = {x, y, width, height };
   //TODO : some parts out of viewport(SDL_SURFACE) area
   SDL_BlitSurface(surface, &src, screen, &dest);

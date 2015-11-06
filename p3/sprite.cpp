@@ -23,12 +23,6 @@ Sprite::Sprite(const std::string& name) :
 				frameHeight(FrameFactory::getInstance().getFrame(name)->getHeight()),
 				worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
 				worldHeight(Gamedata::getInstance().getXmlInt("world/height")){
-	//TODO : call the FrameFactory
-//	FrameFactory::getInstance().getFrame(s);
-	//Frame read all data from xml ?? no!
-	//Frame have limited attr
-
-
 }
 
 Sprite::Sprite(const Sprite& s) :

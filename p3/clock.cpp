@@ -16,7 +16,7 @@ Clock& Clock::getInstance() {
 }
 
 Clock::Clock() :
-		ticks(0), totalTicks(0), started(false), paused(false), sloMo(false), sumOfTicks(
+		ticks(0),cap(1000 / Gamedata::getInstance().getXmlFloat("frameCap")), totalTicks(0), started(false), paused(false), sloMo(false), sumOfTicks(
 				SDL_GetTicks()), pos(
 				Gamedata::getInstance().getXmlInt("clock/locX"),
 				Gamedata::getInstance().getXmlInt("clock/locY")) {
@@ -33,11 +33,16 @@ void Clock::draw() const {
 void Clock::update() {
 	totalTicks = SDL_GetTicks();
 
-//  cout << "totalticks : " << totalTicks << endl;
-	ticks = totalTicks - sumOfTicks;
-	sumOfTicks += ticks;
-	if (this->sloMo)
-		SDL_Delay(1000 / Gamedata::getInstance().getXmlFloat("frameCap") - 3);
+	int delay = this->cap - (totalTicks - sumOfTicks);
+	if(delay >= 0){
+		this->ticks = cap;
+		SDL_Delay(delay);
+		sumOfTicks += cap;
+
+	}else{
+		this->ticks = totalTicks - sumOfTicks;
+		sumOfTicks = totalTicks;
+	}
 }
 
 unsigned int Clock::getTicksSinceLastFrame() const {

@@ -19,11 +19,11 @@ private:
   Clock& clock;
 
   SDL_Surface * const screen;
-  World world;
+  World worldFg;
+  World worldBg;
   Viewport& viewport;
 
 
-  // TODO : why sprite and currentSprite are list ?
   std::list<Drawable*> sprites;
   std::list<Drawable*>::iterator currentSprite;
 

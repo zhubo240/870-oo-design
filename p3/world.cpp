@@ -9,9 +9,6 @@
 
 World::World(const std::string& name, int fact) :
   io( IOManager::getInstance() ),
-//  surface( io.loadAndSet(
-//    Gamedata::getInstance().getXmlStr("back/file"),
-//    Gamedata::getInstance().getXmlBool("back/transparency")) ),
   frame( FrameFactory::getInstance().getFrame(name) ),
   factor(fact),
     frameWidth( Gamedata::getInstance().getXmlInt(name + "/width") ),
@@ -21,17 +18,13 @@ World::World(const std::string& name, int fact) :
 {}
 
 void World::update() {
+	//TODO :
   viewX = static_cast<int>(view.X() / factor) % this->frameWidth;
   viewY = static_cast<int>(view.Y() / factor) % this->frameHeight ;
 
-  //std::cout << this->surface->h << std::endl;
 }
 
 void World::draw() const {
-//  frame->draw(viewX, viewY, 0, 0);
-
-	//TODO : sdl draw .. do not need view info.
-
 	frame->draw(viewX, viewY, 0, 0);
 	frame->draw(0, viewY, frameWidth-viewX, 0);
 	frame->draw(viewX, 0, 0, frameHeight - viewY);
