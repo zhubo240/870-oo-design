@@ -16,33 +16,31 @@ void MultiSprite::advanceFrame(Uint32 ticks) {
 	}
 }
 
-MultiSprite::MultiSprite( const std::string& name, 
-                          const std::vector<Frame*>& f) :
-  Drawable(name, 
-           Vector2f(Gamedata::getInstance().getXmlInt(name+"/startLoc/x"), 
-                    Gamedata::getInstance().getXmlInt(name+"/startLoc/y")), 
-           Vector2f(Gamedata::getInstance().getXmlInt(name+"/speedX"),
-                    Gamedata::getInstance().getXmlInt(name+"/speedY"))
-           ),
-  frames( f ),
-  worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
-  worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
-
-  currentFrame(0),
-  numberOfFrames( Gamedata::getInstance().getXmlInt(name+"/frames") ),
-  frameInterval( Gamedata::getInstance().getXmlInt(name+"/frameInterval") ),
-  timeSinceLastFrame( 0 ),
-  frameWidth(frames[0]->getWidth()),
-  frameHeight(frames[0]->getHeight())
-{ }
+//MultiSprite::MultiSprite( const std::string& name,
+//                          const std::vector<Frame*>& f) :
+//				Drawable(name, Vector2f(Gamedata::getInstance().getXmlInt(name+"/startLoc/x"),
+//	                    Gamedata::getInstance().getXmlInt(name+"/startLoc/y")),
+//	           Vector2f(Gamedata::getInstance().getXmlInt(name+"/speedX"),
+//	                    Gamedata::getInstance().getXmlInt(name+"/speedY")), Gamedata::getInstance().getRandFloat(Gamedata::getInstance().getXmlFloat(name + "/zoom/min"),
+//						Gamedata::getInstance().getXmlFloat(name + "/zoom/max"))),
+//  frames( f ),
+//  worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
+//  worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
+//
+//  currentFrame(0),
+//  numberOfFrames( Gamedata::getInstance().getXmlInt(name+"/frames") ),
+//  frameInterval( Gamedata::getInstance().getXmlInt(name+"/frameInterval") ),
+//  timeSinceLastFrame( 0 ),
+//  frameWidth(frames[0]->getWidth()),
+//  frameHeight(frames[0]->getHeight())
+//{ }
 
 MultiSprite::MultiSprite(const string& name) :
-		Drawable(name,
-		           Vector2f(Gamedata::getInstance().getXmlInt(name+"/startLoc/x"),
-		                    Gamedata::getInstance().getXmlInt(name+"/startLoc/y")),
-		           Vector2f(Gamedata::getInstance().getXmlInt(name+"/speedX"),
-		                    Gamedata::getInstance().getXmlInt(name+"/speedY"))
-		           ),
+		Drawable(name, Vector2f(Gamedata::getInstance().getXmlInt(name+"/startLoc/x"),
+			                    Gamedata::getInstance().getXmlInt(name+"/startLoc/y")),
+			           Vector2f(Gamedata::getInstance().getXmlInt(name+"/speedX"),
+			                    Gamedata::getInstance().getXmlInt(name+"/speedY")), Gamedata::getInstance().getRandFloat(Gamedata::getInstance().getXmlFloat(name + "/zoom/min"),
+								Gamedata::getInstance().getXmlFloat(name + "/zoom/max"))),
 		  frames( FrameFactory::getInstance().getFrames(name) ),
 		  worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
 		  worldHeight(Gamedata::getInstance().getXmlInt("world/height")),

@@ -45,6 +45,7 @@ Frame& Frame::operator=(const Frame& rhs) {
   return *this;
 }
 
+
 void Frame::draw(Sint16 x, Sint16 y) const {
   SDL_Rect src = { sourceX, sourceY, width, height };    
   x -= Viewport::getInstance().X();
@@ -55,14 +56,16 @@ void Frame::draw(Sint16 x, Sint16 y) const {
   SDL_BlitSurface(surface, &src, screen, &dest);
 }
 
+
+
 void Frame::draw(Sint16 sx, Sint16 sy, Sint16 dx, Sint16 dy) const {
   SDL_Rect src = { sx, sy, width, height };    
   SDL_Rect dest = {dx, dy, width, height };
   SDL_BlitSurface(surface, &src, screen, &dest);
 }
 
-void Frame::draw(Sint16 x, Sint16 y, double angle) const {
-  SDL_Surface* tmp = rotozoomSurface(surface, angle, 1, 1);
+void Frame::draw(Sint16 x, Sint16 y, float angle, float scale, int dummy) const {
+  SDL_Surface* tmp = rotozoomSurface(surface, angle, scale, SMOOTHING_ON);
   Sint16 zero = 0;
   Uint16 width = tmp->w;
   Uint16 height = tmp->h;

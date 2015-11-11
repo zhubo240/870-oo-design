@@ -2,22 +2,22 @@
 <GameData>
 <!-- screenTitle is also used to identify you and your animation. 
      So make sure to include your name as part of the screenTitle -->
-<screenTitle>Bo Zhu's Project 3</screenTitle>
+<screenTitle>Bo Zhu's Project 4</screenTitle>
 <maxStringSize>50</maxStringSize>
 
-<frameCap>60</frameCap>
+<frameCap>20</frameCap>
 <framesAreCapped>true</framesAreCapped>
 <frameMax>300</frameMax>
 <username>bzhu2</username>
 
 <view>
-  <width>854</width>
-  <height>480</height>
+  <width>700</width>
+  <height>401</height>
 </view>
 
 <world>
-  <width>2000</width>
-  <height>1960</height>
+  <width>15000</width>
+  <height>401</height>
 </world>
 
 <clock>
@@ -26,18 +26,26 @@
 </clock>
 
 
-<back>
-  <file>images/checkerboard.bmp</file>
-  <red>193</red>
-  <green>205</green>
-  <blue>205</blue>
+<nearback>
+  <file>images/near.png</file>
   <factor>1</factor>
   <srcX>0</srcX>
   <srcY>0</srcY>
-  <width>1280</width>
-  <height>960</height>
+  <width>708</width>
+  <height>401</height>
+  <transparency>true</transparency>
+</nearback>
+
+<farback>
+  <file>images/far.png</file>
+  <factor>2</factor>
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>706</width>
+  <height>500</height>
   <transparency>false</transparency>
-</back>
+</farback>
+
 
 <font name="font">
   <file>font/dyslexic-bold.otf</file>
@@ -50,46 +58,68 @@
 
 <triangle>
   <file>images/triangle.png</file>
-  <startLoc x="120" y="140"/>
+  <startLoc x="120" y="200"/>
   <frames>4</frames>
   <frameInterval>20</frameInterval>
    <srcX>0</srcX>
   <srcY>0</srcY>
   <width>100</width>
   <height>100</height>
-  <speedX>-200</speedX>
-  <speedY>200</speedY>
-  <count>5</count>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <zoom>
+  <max>1</max>
+  <min>1</min>
+  </zoom>
+  <count>20</count>
   <transparency>true</transparency>
 </triangle>
 
 <car>
 <file>images/cars.png</file>
-  <startLoc x="120" y="140"/>
+  <startLoc x="120" y="280"/>
   <frames>6</frames>
    <numFramesOneDir>3</numFramesOneDir>
   <frameInterval>20</frameInterval>
    <srcX>0</srcX>
   <srcY>0</srcY>
+  <zoom>
+  <max>1</max>
+  <min>1</min>
+  </zoom>
   <width>200</width>
   <height>88</height>
     <speedX>200</speedX>
-  <speedY>0</speedY>
+  <speedY>50</speedY>
   <transparency>true</transparency>
 </car>
 
-<ghost>
-  <file>images/ghost.bmp</file>
-<x>100</x>
-<y>100</y>
-  <srcX>0</srcX>
+<star>
+<file>images/star.png</file>
+<startLoc x="120" y="280"/>
+<count>200</count>
+<srcX>0</srcX>
   <srcY>0</srcY>
-  <width>37</width>
-  <height>34</height>
-  <startLoc x="320" y="240"/>
-  <speedX>175</speedX>
-  <speedY>175</speedY>
-  <transparency>true</transparency>
-</ghost>
+  <width>64</width>
+  <height>53</height>
+    <speedX>200</speedX>
+  <speedY>0</speedY>
+  <zoom>
+  <max>0.5</max>
+  <min>0.3</min>
+  </zoom>
+<transparency>true</transparency>
+</star>
+
+<hud>
+<position x = "0"  y="0"/>
+<width> 150 </width>
+<height> 200 </height>
+<alpha>50</alpha>
+<rect red="255" yellow="0"  blue="255"/>
+<bord thick = "10" red="0" yellow="255"  blue="0" />
+<maxTime>2000</maxTime>
+</hud>
+
 
 </GameData>

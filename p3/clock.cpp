@@ -33,7 +33,7 @@ void Clock::draw() const {
 void Clock::update() {
 	totalTicks = SDL_GetTicks();
 
-	cout << "time : " << totalTicks << endl;
+//	cout << "time : " << totalTicks << endl;
 
 	int delay = this->cap - (totalTicks - sumOfTicks);
 	if(delay >= 0){

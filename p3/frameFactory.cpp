@@ -68,7 +68,7 @@ std::vector<Frame*> FrameFactory::getFrames(const std::string& name) {
 
 	// It wasn't in the map, so we have to make the vector of Frames:
 	SDL_Surface* surface = IOManager::getInstance().loadAndSet(
-			gdata.getXmlStr(name + "/file"), true);
+			gdata.getXmlStr(name + "/file"), gdata.getXmlBool(name + "/transparency"));
 	unsigned numberOfFrames = gdata.getXmlInt(name + "/frames");
 	std::vector<Frame*> frames;
 	std::vector<SDL_Surface*> surfaces;

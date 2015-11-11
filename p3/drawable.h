@@ -14,8 +14,8 @@ class Frame;
 // and must have.
 class Drawable {
 public:
-  Drawable(const std::string& n, const Vector2f& pos, const Vector2f& vel): 
-    name(n), position(pos), velocity(vel) {}
+  Drawable(const std::string& n, const Vector2f& pos, const Vector2f& vel, float zoom) :
+    name(n), position(pos), velocity(vel), zoom(zoom) {}
 
   Drawable(const Drawable& s) : 
     name(s.name), position(s.position), velocity(s.velocity)
@@ -41,7 +41,7 @@ public:
   float velocityY() const  { return velocity[1]; }
   void velocityY(float vy) { velocity[1] = vy;   }
 
-  const Vector2f& getVelocity() const   { return velocity; }
+const Vector2f& getVelocity() const   { return velocity; }
   void setVelocity(const Vector2f& vel) { velocity = vel;  }
   const Vector2f& getPosition() const   { return position; }
   void setPosition(const Vector2f& pos) { position = pos;  }
@@ -50,9 +50,13 @@ public:
     throw std::string("No collidedWith");  
   }
 
+  float getZoom() const { return this->zoom;}
+  void setZoom(float zoom){this->zoom = zoom;}
+
 private:
   std::string name;
   Vector2f position;
   Vector2f velocity;
+  float zoom;
 };
 #endif

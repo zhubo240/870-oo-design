@@ -1,26 +1,37 @@
-#include <cmath>
 #include "sprite.h"
-#include "gamedata.h"
+
+#include <SDL/SDL_stdinc.h>
+#include <cmath>
+#include <cstdlib>
+
+#include "frame.h"
 #include "frameFactory.h"
+#include "gamedata.h"
+#include "vector2f.h"
 
-Sprite::Sprite(const string& n, const Vector2f& pos, const Vector2f& vel,
-		const Frame* frm) :
-		Drawable(n, pos, vel), frame(frm), frameWidth(frame->getWidth()), frameHeight(
-				frame->getHeight()), worldWidth(
-				Gamedata::getInstance().getXmlInt("world/width")), worldHeight(
-				Gamedata::getInstance().getXmlInt("world/height")) {
-
-}
+//Sprite::Sprite(const string& n, const Vector2f& pos, const Vector2f& vel,
+//		const Frame* frm) :
+//		Drawable(n, pos, vel, Gamedata::getInstance().getRandFloat(Gamedata::getInstance().getXmlFloat(name + "/zoom/min"),
+//				Gamedata::getInstance().getXmlFloat(name + "/zoom/max"))),
+//				frame(frm), frameWidth(frame->getWidth()),
+//		frameHeight(frame->getHeight()), worldWidth(Gamedata::getInstance().getXmlInt("world/width")), worldHeight(
+//				Gamedata::getInstance().getXmlInt("world/height"))
+//				  {
+//}
 
 Sprite::Sprite(const std::string& name) :
 		Drawable(name,
 		           Vector2f(Gamedata::getInstance().getXmlInt(name+"/startLoc/x"),
 		                    Gamedata::getInstance().getXmlInt(name+"/startLoc/y")),
 		           Vector2f(Gamedata::getInstance().getXmlInt(name+"/speedX"),
-		                    Gamedata::getInstance().getXmlInt(name+"/speedY"))),
+		                    Gamedata::getInstance().getXmlInt(name+"/speedY")),
+							Gamedata::getInstance().getRandFloat(Gamedata::getInstance().getXmlFloat(name + "/zoom/min"),
+										Gamedata::getInstance().getXmlFloat(name + "/zoom/max")) ),
+
 		 frame(FrameFactory::getInstance().getFrame(name)),
-		 frameWidth(FrameFactory::getInstance().getFrame(name)->getWidth()),
-				frameHeight(FrameFactory::getInstance().getFrame(name)->getHeight()),
+		 //TODO: I change this
+		 frameWidth(FrameFactory::getInstance().getFrame(name)->getWidth() * this->getZoom()),
+				frameHeight(FrameFactory::getInstance().getFrame(name)->getHeight() * this->getZoom()),
 				worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
 				worldHeight(Gamedata::getInstance().getXmlInt("world/height")){
 }
@@ -45,7 +56,8 @@ Sprite& Sprite::operator=(const Sprite& rhs) {
 void Sprite::draw() const {
 	Uint32 x = static_cast<Uint32>(X());
 	Uint32 y = static_cast<Uint32>(Y());
-	frame->draw(x, y);
+	//TODO: you need to consider the zoom
+	frame->draw(x, y, 0., this->getZoom(), 0);
 }
 
 
@@ -58,7 +70,8 @@ void Sprite::update(Uint32 ticks) {
 }
 
 void Sprite::move(Uint32 ticks) {
-	Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
+	Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001 * this->getZoom();
+
 		setPosition(getPosition() + incr);
 
 		if (Y() < 0) {
@@ -74,5 +87,4 @@ void Sprite::move(Uint32 ticks) {
 		if (X() > worldWidth - frameWidth) {
 			velocityX(-abs(velocityX()));
 		}
-
 }

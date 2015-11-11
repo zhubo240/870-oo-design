@@ -1,10 +1,13 @@
-#include <list>
-#include <vector>
 #include <SDL.h>
-#include "ioManager.h"
-#include "clock.h"
+#include <list>
+#include <string>
+#include <vector>
+
+#include "drawable.h"
+#include "Hud.h"
 #include "world.h"
-#include "viewport.h"
+
+class Clock;
 
 class Manager {
 public:
@@ -14,17 +17,25 @@ public:
   void switchSprite();
 
 private:
+  struct Less {
+	  bool operator()(Drawable* d1, Drawable* d2){
+		  return d1->getZoom() < d2->getZoom();
+	  }
+  };
+
   const bool env;
   const IOManager& io;
   Clock& clock;
 
   SDL_Surface * const screen;
-  World worldFg;
-  World worldBg;
+  World nearBg;
+  World farBg;
   Viewport& viewport;
 
 
   std::list<Drawable*> sprites;
+  std::vector<Drawable*> obs;
+  std::vector<Drawable*> stars;
   std::list<Drawable*>::iterator currentSprite;
 
   bool makeVideo;
@@ -33,8 +44,17 @@ private:
   const std::string title;
   const int frameMax;
 
+  Drawable* runner;
+  bool isRunnerFly;
+
+  Hud hud;
+
+  struct Less less;
+
+
   void draw() const;
   void update();
+  bool checkCollision();
 
   Manager(const Manager&);
   Manager& operator=(const Manager&);

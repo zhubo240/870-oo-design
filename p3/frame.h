@@ -19,6 +19,7 @@ public:
 
   SDL_Surface* getSurface() const { return surface; }
   void draw(Sint16 x, Sint16 y) const;
+  void draw(Sint16 x, Sint16 y, float angle, float scale, int dummy) const;
 
   // Chunk::draw needs the next function if the chunk is not
   // on a separate surface:

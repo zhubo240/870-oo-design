@@ -7,10 +7,10 @@
 #include "gamedata.h"
 
 
-World::World(const std::string& name, int fact) :
+World::World(const std::string& name) :
   io( IOManager::getInstance() ),
   frame( FrameFactory::getInstance().getFrame(name) ),
-  factor(fact),
+  factor(Gamedata::getInstance().getXmlInt(name + "/factor")),
     frameWidth( Gamedata::getInstance().getXmlInt(name + "/width") ),
 	frameHeight(Gamedata::getInstance().getXmlInt(name + "/height")),
     viewX(0.0), viewY(0.0),
