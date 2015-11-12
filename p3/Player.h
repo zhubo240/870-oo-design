@@ -17,6 +17,7 @@ public:
 	virtual ~Player();
 
 	//supper class
+	virtual void move(Uint32 ticks);
 //	virtual void update(Uint32 ticks);
 //	virtual void draw() const;
 

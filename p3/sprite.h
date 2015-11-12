@@ -21,7 +21,7 @@ public:
 
   virtual void move(Uint32 ticks);
 
-private:
+protected:
   const Frame * frame;
   int frameWidth;
   int frameHeight;

@@ -19,9 +19,9 @@
 #include "ioManager.h"
 #include "multisprite.h"
 #include "Player.h"
-#include "sprite.h"
 #include "vector2f.h"
 #include "viewport.h"
+#include "ViewRelatedSprite.h"
 
 Manager::~Manager() {
 	std::list<Drawable*>::const_iterator ptr = sprites.begin();
@@ -75,7 +75,7 @@ Manager::Manager() :
 		int interval = Gamedata::getInstance().getXmlInt("world/width") / n;
 		int height = this->screen->h;
 
-		Drawable* star = new Sprite("star");
+		Drawable* star = new ViewRelatedSprite("star");
 		star->setPosition(
 				Vector2f(i * interval,
 						(int) Gamedata::getInstance().getRandInRange(

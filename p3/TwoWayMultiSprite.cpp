@@ -53,11 +53,11 @@ void TwoWayMultiSprite::move(Uint32 ticks) {
 	setPosition(getPosition() + incr);
 
 	if (Y() < 0) {
-		//velocityY(abs(velocityY()));
+		velocityY(abs(velocityY()));
 		velocityY(0);
 	}
 	if (Y() > worldHeight - frameHeight) {
-		//velocityY(-abs(velocityY()));
+		velocityY(-abs(velocityY()));
 		velocityY(0);
 	}
 

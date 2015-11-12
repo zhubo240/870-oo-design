@@ -18,7 +18,6 @@ World::World(const std::string& name) :
 {}
 
 void World::update() {
-	//TODO :
   viewX = static_cast<int>(view.X() / factor) % this->frameWidth;
   viewY = static_cast<int>(view.Y() / factor) % this->frameHeight ;
 

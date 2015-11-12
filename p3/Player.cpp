@@ -27,6 +27,30 @@ Player::~Player() {
 	// TODO Auto-generated destructor stub
 }
 
+void Player::move(Uint32 ticks) {
+	Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
+	setPosition(getPosition() + incr);
+
+	if (Y() < 0) {
+		velocityY(0);
+	}
+	if (Y() > worldHeight - frameHeight) {
+		velocityY(0);
+	}
+
+	if (X() < 0) {
+		velocityX(abs(velocityX()));
+		this->X(0);
+		this->dirChanged = true;
+
+	}
+	if (X() > worldWidth - frameWidth) {
+		velocityX(-abs(velocityX()));
+		this->X(worldWidth - frameWidth);
+		this->dirChanged = true;
+	}
+}
+
 void Player::stopX() {
 
 	Vector2f v = this->getVelocity();
