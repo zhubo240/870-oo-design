@@ -8,9 +8,9 @@
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
-#include "TwoWaySprite.h"
+#include "TwoWayMultiSprite.h"
 
-class Player: public TwoWaySprite {
+class Player: public TwoWayMultiSprite {
 public:
 	Player(const string& name);
 	//Player(const Player& player);
@@ -20,10 +20,8 @@ public:
 //	virtual void update(Uint32 ticks);
 //	virtual void draw() const;
 
-	void stopLeft();
-	void stopRight();
-	void stopUp();
-	void stopDown();
+	void stopX();
+	void stopY();
 	void right();
 	void left();
 	void up();

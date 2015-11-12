@@ -14,7 +14,7 @@
 #include "vector2f.h"
 
 
-Player::Player(const string& name) : TwoWaySprite(name), isUpKeyPressed(false), isDownKeyPressed(false),
+Player::Player(const string& name) : TwoWayMultiSprite(name), isUpKeyPressed(false), isDownKeyPressed(false),
 			isLeftKeyPressed(false), isRightKeyPressed(false), speedX(Gamedata::getInstance().getXmlInt("player/speedX")),
 			speedY(Gamedata::getInstance().getXmlInt("player/speedY")){
 
@@ -27,49 +27,47 @@ Player::~Player() {
 	// TODO Auto-generated destructor stub
 }
 
-void Player::stopLeft() {
+void Player::stopX() {
 
-	Vector2f oldv = this->getVelocity();
-	oldv[0] += this->speedX;
+	Vector2f v = this->getVelocity();
+	v[0] = 0;
 
-	this->setVelocity(oldv);
+	this->setVelocity(v);
 }
 
-void Player::stopRight() {
-	Vector2f oldv = this->getVelocity();
-	oldv[0] -= this->speedX;
 
-	this->setVelocity(oldv);
+void Player::stopY() {
+	Vector2f v = this->getVelocity();
+	v[1] = 0;
 
+	this->setVelocity(v);
 }
 
-void Player::stopUp() {
-	Vector2f oldv = this->getVelocity();
-	oldv[1] += this->speedY;
-
-	this->setVelocity(oldv);
-}
-
-void Player::stopDown() {
-	Vector2f oldv = this->getVelocity();
-	oldv[1] -= this->speedY;
-
-	this->setVelocity(oldv);
-
-}
 
 void Player::right() {
-	this->stopLeft();
+	Vector2f v = this->getVelocity();
+	v[0] = this->speedX;
+
+	this->setVelocity(v);
 }
 
 void Player::left() {
-	this->stopRight();
+	Vector2f v = this->getVelocity();
+	v[0] = (-1) * this->speedX;
+
+	this->setVelocity(v);
 }
 
 void Player::up() {
-	this->stopDown();
+	Vector2f v = this->getVelocity();
+	v[1] = (-1) * this->speedY;
+
+	this->setVelocity(v);
 }
 
 void Player::down() {
-	this->stopUp();
+	Vector2f v = this->getVelocity();
+	v[1] = this->speedY;
+
+	this->setVelocity(v);
 }

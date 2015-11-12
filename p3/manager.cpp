@@ -304,16 +304,16 @@ void Manager::play() {
 			if (event.type == SDL_KEYUP) {
 
 				if (event.key.keysym.sym == SDLK_UP) {
-					this->player->stopUp();
+					this->player->stopY();
 				}
 				if (event.key.keysym.sym == SDLK_DOWN) {
-					this->player->stopDown();
+					this->player->stopY();
 				}
 				if (event.key.keysym.sym == SDLK_LEFT) {
-					this->player->stopLeft();
+					this->player->stopX();
 				}
 				if (event.key.keysym.sym == SDLK_RIGHT) {
-					this->player->stopRight();
+					this->player->stopX();
 				}
 
 			}

@@ -5,15 +5,15 @@
  *      Author: zhubo
  */
 
-#ifndef TWOWAYSPRITE_H_
-#define TWOWAYSPRITE_H_
+#ifndef TWOWAYMULTISPRITE_H_
+#define TWOWAYMULTISPRITE_H_
 
 #include "multisprite.h"
 
-class TwoWaySprite: public MultiSprite {
+class TwoWayMultiSprite: public MultiSprite {
 public:
-	TwoWaySprite(const string & name);
-	virtual ~TwoWaySprite();
+	TwoWayMultiSprite(const string & name);
+	virtual ~TwoWayMultiSprite();
 
 //	 TODO : even I know it is virtual, I still need to write those there
 	  //why there are some link error, if I keep this virtual method in .h
@@ -32,4 +32,4 @@ protected:
 	bool dirChanged;
 };
 
-#endif /* TWOWAYSPRITE_H_ */
+#endif /* TWOWAYMULTISPRITE_H_ */

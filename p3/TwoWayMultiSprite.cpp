@@ -1,5 +1,5 @@
 
-#include "TwoWaySprite.h"
+#include "TwoWayMultiSprite.h"
 
 #include <SDL/SDL_stdinc.h>
 #include <cstdlib>
@@ -9,21 +9,21 @@
 #include "gamedata.h"
 #include "vector2f.h"
 
-TwoWaySprite::TwoWaySprite(const string& name) :
+TwoWayMultiSprite::TwoWayMultiSprite(const string& name) :
 		MultiSprite(name), dir(LARGER), numFramesOneDir(Gamedata::getInstance().getXmlInt(name+"/numFramesOneDir")), dirChanged(
 				false) {
 }
 
-TwoWaySprite::~TwoWaySprite() {
+TwoWayMultiSprite::~TwoWayMultiSprite() {
 	//do nothing
 }
 
-void TwoWaySprite::update(Uint32 ticks) {
+void TwoWayMultiSprite::update(Uint32 ticks) {
 	this->move(ticks);
 	this->advanceFrame(ticks);
 }
 
-void TwoWaySprite::advanceFrame(Uint32 ticks) {
+void TwoWayMultiSprite::advanceFrame(Uint32 ticks) {
 	if (this->dirChanged) {
 		if (this->dir == LARGER)
 			this->dir = SMALLER;
@@ -48,7 +48,7 @@ void TwoWaySprite::advanceFrame(Uint32 ticks) {
 
 }
 
-void TwoWaySprite::move(Uint32 ticks) {
+void TwoWayMultiSprite::move(Uint32 ticks) {
 	Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
 	setPosition(getPosition() + incr);
 

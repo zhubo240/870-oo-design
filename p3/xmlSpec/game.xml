@@ -115,14 +115,14 @@
   </zoom>
   <width>200</width>
   <height>88</height>
-    <speedX>200</speedX>
-  <speedY>50</speedY>
+    <speedX>0</speedX>
+  <speedY>0</speedY>
   <transparency>true</transparency>
 </car>
 
 <player>
-<speedX>30</speedX>
-<speedY>30</speedY>
+<speedX>120</speedX>
+<speedY>120</speedY>
 </player>
 
 <star>
@@ -133,7 +133,7 @@
   <srcY>0</srcY>
   <width>64</width>
   <height>53</height>
-    <speedX>200</speedX>
+    <speedX>0</speedX>
   <speedY>0</speedY>
   <zoom>
   <max>0.5</max>
