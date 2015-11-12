@@ -8,6 +8,7 @@
 #include "world.h"
 
 class Clock;
+class Player;
 
 class Manager {
 public:
@@ -44,13 +45,15 @@ private:
   const std::string title;
   const int frameMax;
 
-  Drawable* runner;
-  bool isRunnerFly;
+//  Drawable* runner;
+//  bool isRunnerFly;
+  Player* player;
 
   Hud hud;
 
   struct Less less;
 
+  vector<vector<Drawable*> > foodGroups;
 
   void draw() const;
   void update();

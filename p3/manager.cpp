@@ -6,20 +6,22 @@
 #include <SDL/SDL_keysym.h>
 #include <SDL/SDL_stdinc.h>
 #include <SDL/SDL_video.h>
-#include <cmath>
+#include <algorithm>
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
+#include <iterator>
 #include <sstream>
-#include <algorithm>
-#include <string>
 
-#include "drawable.h"
-#include "gamedata.h"
-#include "sprite.h"
-#include "TwoWaySprite.h"
-#include "vector2f.h"
 #include "clock.h"
+#include "frame.h"
+#include "gamedata.h"
+#include "ioManager.h"
+#include "multisprite.h"
+#include "Player.h"
+#include "sprite.h"
+#include "vector2f.h"
+#include "viewport.h"
 
 Manager::~Manager() {
 	std::list<Drawable*>::const_iterator ptr = sprites.begin();
@@ -40,8 +42,8 @@ Manager::Manager() :
 		makeVideo(false), frameCount(0), username(
 				Gamedata::getInstance().getXmlStr("username")), title(
 				Gamedata::getInstance().getXmlStr("screenTitle")), frameMax(
-				Gamedata::getInstance().getXmlInt("frameMax")), runner(
-				new TwoWaySprite("car")), isRunnerFly(false), hud(Hud("hud")){
+				Gamedata::getInstance().getXmlInt("frameMax")), player(
+				new Player("car")), hud(Hud("hud")) {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		throw string("Unable to initialize SDL: ");
 	}
@@ -49,8 +51,7 @@ Manager::Manager() :
 	atexit(SDL_Quit);
 
 	//two way
-	runner = new TwoWaySprite("car");
-	sprites.push_back(runner);
+	sprites.push_back(player);
 
 	//generate obstacles
 	int n = Gamedata::getInstance().getXmlInt("triangle/count");
@@ -85,13 +86,40 @@ Manager::Manager() :
 
 	std::sort(stars.begin(), stars.end(), this->less);
 
+	//generate food groups.
+	int min = Gamedata::getInstance().getXmlInt("food/group/min");
+	int max = Gamedata::getInstance().getXmlInt("food/group/max");
+	n = Gamedata::getInstance().getXmlInt("food/group/count");
+
+	for (int i = 0; i < n; i++) {
+		int interval = Gamedata::getInstance().getXmlInt("world/width") / n;
+		int height = this->screen->h;
+
+		vector<Drawable*> foodGroup;
+		int min = Gamedata::getInstance().getXmlInt("food/group/min");
+		int max = Gamedata::getInstance().getXmlInt("food/group/max");
+		for (int j = 0; j < Gamedata::getInstance().getRandInRange(min, max);
+				j++) {
+			//std::cout << "here" << std::endl;
+			Drawable* food = new MultiSprite("food");
+			food->setPosition(
+					Vector2f(i * interval,
+							(int) Gamedata::getInstance().getRandInRange(
+									0.3 * height, 0.8 * height)));
+			foodGroup.push_back(food);
+		}
+
+		this->foodGroups.push_back(foodGroup);
+	}
+
 	currentSprite = sprites.begin();
 	viewport.setObjectToTrack(*currentSprite);
 }
 
 void Manager::draw() const {
 	farBg.draw();
-	//stars
+
+//stars
 
 	{
 		std::vector<Drawable*>::const_iterator ptr = this->stars.begin();
@@ -102,11 +130,24 @@ void Manager::draw() const {
 	}
 
 	nearBg.draw();
+
+//obs
 	{
 		std::list<Drawable*>::const_iterator ptr = sprites.begin();
 		while (ptr != sprites.end()) {
 			(*ptr)->draw();
 			++ptr;
+		}
+	}
+
+//foodGroup
+	{
+		for (int i = 0; i < this->foodGroups.size(); i++) {
+//			std::cout << "i = " << i << std::endl;
+			for (int j = 0; j < this->foodGroups[i].size(); j++) {
+				this->foodGroups[i][j]->draw();
+//				std::cout <<"j = " << j << std::endl;
+			}
 		}
 	}
 
@@ -117,7 +158,7 @@ void Manager::draw() const {
 		this->hud.draw();
 	}
 
-	//clock.draw();
+//clock.draw();
 	SDL_Flip(screen);
 }
 
@@ -128,10 +169,10 @@ bool Manager::checkCollision() {
 		int maxx1 = minx1 + obs[i]->getFrame()->getWidth();
 		int maxy1 = miny1 + obs[i]->getFrame()->getHeight();
 
-		int minx2 = this->runner->X();
-		int miny2 = this->runner->Y();
-		int maxx2 = minx2 + runner->getFrame()->getWidth();
-		int maxy2 = miny2 + runner->getFrame()->getHeight();
+		int minx2 = this->player->X();
+		int miny2 = this->player->Y();
+		int maxx2 = minx2 + player->getFrame()->getWidth();
+		int maxy2 = miny2 + player->getFrame()->getHeight();
 
 		//left up conner
 		int minx = std::max(minx1, minx2);
@@ -144,7 +185,6 @@ bool Manager::checkCollision() {
 //			std::cout << "collision" << std::endl;
 			return true;
 		}
-
 	}
 	return false;
 }
@@ -184,6 +224,15 @@ void Manager::update() {
 			(*ptr)->update(ticks);
 			++ptr;
 		}
+	}
+
+	{
+		for (int i = 0; i < this->foodGroups.size(); i++) {
+			for (int j = 0; j < this->foodGroups[i].size(); j++) {
+				this->foodGroups[i][j]->update(ticks);
+			}
+		}
+
 	}
 
 	if (makeVideo && frameCount < frameMax) {
@@ -238,26 +287,35 @@ void Manager::play() {
 					makeVideo = true;
 				}
 				if (keystate[SDLK_UP]) {
-//					std::cout << "key down" << std::endl;
-					if (!this->isRunnerFly) {
-						int vx = this->runner->getVelocity()[0];
-						runner->setVelocity(Vector2f(vx, -50));
-						this->isRunnerFly = true;
-					}
-				}
+					player->up();
 
+				}
+				if (keystate[SDLK_DOWN]) {
+					player->down();
+				}
+				if (keystate[SDLK_LEFT]) {
+					player->left();
+				}
+				if (keystate[SDLK_RIGHT]) {
+					player->right();
+				}
 			}
 
 			if (event.type == SDL_KEYUP) {
 
-//				if (keystate[SDLK_UP]) {
-//					std::cout << "key up" << std::endl;
-				if (this->isRunnerFly) {
-					int vx = this->runner->getVelocity()[0];
-					runner->setVelocity(Vector2f(vx, 50));
-					this->isRunnerFly = false;
+				if (event.key.keysym.sym == SDLK_UP) {
+					this->player->stopUp();
 				}
-//				}
+				if (event.key.keysym.sym == SDLK_DOWN) {
+					this->player->stopDown();
+				}
+				if (event.key.keysym.sym == SDLK_LEFT) {
+					this->player->stopLeft();
+				}
+				if (event.key.keysym.sym == SDLK_RIGHT) {
+					this->player->stopRight();
+				}
+
 			}
 		}
 		draw();

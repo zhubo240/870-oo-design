@@ -75,6 +75,32 @@
   <transparency>true</transparency>
 </triangle>
 
+<food>
+  <file>images/food.png</file>
+  <startLoc x="120" y="200"/>
+  <frames>4</frames>
+  <frameInterval>20</frameInterval>
+   <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>63</width>
+  <height>56</height>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  
+  <zoom>
+  <max>1</max>
+  <min>1</min>
+  </zoom>
+  
+  <group>
+  <count>10</count>
+  <max>1</max>
+  <min>1</min>
+  </group>
+  
+  <transparency>true</transparency>
+</food>
+
 <car>
 <file>images/cars.png</file>
   <startLoc x="120" y="280"/>
@@ -93,6 +119,11 @@
   <speedY>50</speedY>
   <transparency>true</transparency>
 </car>
+
+<player>
+<speedX>30</speedX>
+<speedY>30</speedY>
+</player>
 
 <star>
 <file>images/star.png</file>
