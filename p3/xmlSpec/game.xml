@@ -16,7 +16,7 @@
 </view>
 
 <world>
-  <width>15000</width>
+  <width>150000</width>
   <height>401</height>
 </world>
 
@@ -86,12 +86,10 @@
   <height>56</height>
   <speedX>0</speedX>
   <speedY>0</speedY>
-  
   <zoom>
   <max>1</max>
   <min>1</min>
   </zoom>
-  
   <group>
   <count>10</count>
   <max>1</max>
@@ -103,7 +101,7 @@
 
 <car>
 <file>images/cars.png</file>
-  <startLoc x="120" y="280"/>
+  <startLoc x="20000" y="280"/>
   <frames>6</frames>
    <numFramesOneDir>3</numFramesOneDir>
   <frameInterval>20</frameInterval>
@@ -128,7 +126,7 @@
 <star>
 <file>images/star.png</file>
 <startLoc x="120" y="280"/>
-<count>200</count>
+<count>700</count>
 <srcX>0</srcX>
   <srcY>0</srcY>
   <width>64</width>
@@ -146,9 +144,9 @@
 <position x = "0"  y="0"/>
 <width> 150 </width>
 <height> 200 </height>
-<alpha>50</alpha>
-<rect red="255" yellow="0"  blue="255"/>
-<bord thick = "10" red="0" yellow="255"  blue="0" />
+<alpha>100</alpha>
+<rect red="255" green="255"  blue="255"/>
+<bord thick = "10" red="0" green="255"  blue="0" />
 <maxTime>2000</maxTime>
 </hud>
 

@@ -45,13 +45,14 @@ private:
 	int alpha;
 	int thickness;
 	std::vector<int> rectColors;
-	int rectColor;
 	std::vector<int> bordColors;
 	int bordColor;
 
 
 	int maxTime;
 	int leftTime;
+
+	int isFirstAppear;
 };
 
 #endif /* HUD_H_ */

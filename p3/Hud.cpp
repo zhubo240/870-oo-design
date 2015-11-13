@@ -15,9 +15,9 @@
 #include "ioManager.h"
 
 Hud::Hud(const string& name) :
-		screen(IOManager::getInstance().getScreen()),
-		clock(Clock::getInstance()),
-		x(Gamedata::getInstance().getXmlInt(name + "/position/x")), y(
+		screen(IOManager::getInstance().getScreen()), clock(
+				Clock::getInstance()), x(
+				Gamedata::getInstance().getXmlInt(name + "/position/x")), y(
 				Gamedata::getInstance().getXmlInt(name + "/position/y")), width(
 				Gamedata::getInstance().getXmlInt(name + "/width")), height(
 				Gamedata::getInstance().getXmlInt(name + "/height")), alpha(
@@ -26,20 +26,21 @@ Hud::Hud(const string& name) :
 				this->height * 2), rectColors(vector<int>(3)), bordColors(
 				vector<int>(3)), maxTime(
 				Gamedata::getInstance().getXmlInt("hud/maxTime")), leftTime(
-				Gamedata::getInstance().getXmlInt("hud/maxTime")), isVisiable(true) {
+				Gamedata::getInstance().getXmlInt("hud/maxTime")), isVisiable(
+				true), isFirstAppear(true) {
 	this->rectColors[0] = Gamedata::getInstance().getXmlInt(name + "/rect/red");
 	this->rectColors[1] = Gamedata::getInstance().getXmlInt(
-			name + "/rect/yellow");
+			name + "/rect/green");
 	this->rectColors[2] = Gamedata::getInstance().getXmlInt(
 			name + "/rect/blue");
-	this->rectColor = SDL_MapRGB(screen->format, this->rectColors[0],
-			this->rectColors[1], this->rectColors[2]);
+
 
 	this->bordColors[0] = Gamedata::getInstance().getXmlInt(name + "/bord/red");
 	this->bordColors[1] = Gamedata::getInstance().getXmlInt(
-			name + "/bord/yellow");
+			name + "/bord/green");
 	this->bordColors[2] = Gamedata::getInstance().getXmlInt(
 			name + "/bord/blue");
+
 	this->bordColor = SDL_MapRGB(screen->format, this->bordColors[0],
 			this->bordColors[1], this->bordColors[2]);
 }
@@ -56,7 +57,7 @@ void Hud::draw() const {
 
 void Hud::drawRect() const {
 	Draw_AALine(this->screen, this->x, this->y, this->x + this->width, this->y,
-			this->thickness, this->rectColor);
+			this->thickness, this->rectColors[0], this->rectColors[1], this->rectColors[2], this->alpha);
 }
 
 void Hud::drawBord() const {
@@ -74,17 +75,25 @@ void Hud::drawBord() const {
 
 void Hud::drawMsg() const {
 	clock.draw();
+	//descriptions
+	IOManager::getInstance().printMessageAt("w to go up", 0, 100);
+	IOManager::getInstance().printMessageAt("s to go down", 0, 120);
+	IOManager::getInstance().printMessageAt("a to go left", 0, 140);
+	IOManager::getInstance().printMessageAt("d to go right", 0, 160);
 }
 
-
 void Hud::update(int ticks) {
-	if(this->isVisiable){
-	this->leftTime -= ticks;
+	if (this->isFirstAppear) {
+		if (this->isVisiable) {
+			this->leftTime -= ticks;
 
-	if(this->leftTime <= 0){
-		this->isVisiable = false;
-		this->leftTime = this->maxTime;
-	}
+			if (this->leftTime <= 0) {
+				this->isVisiable = false;
+				this->leftTime = this->maxTime;
+				this->isFirstAppear = false;
+			}
+
+		}
 	}
 }
 Hud::~Hud() {

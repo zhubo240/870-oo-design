@@ -120,7 +120,6 @@ void Manager::draw() const {
 	farBg.draw();
 
 //stars
-
 	{
 		std::vector<Drawable*>::const_iterator ptr = this->stars.begin();
 		while (ptr != stars.end()) {
@@ -143,10 +142,8 @@ void Manager::draw() const {
 //foodGroup
 	{
 		for (int i = 0; i < this->foodGroups.size(); i++) {
-//			std::cout << "i = " << i << std::endl;
 			for (int j = 0; j < this->foodGroups[i].size(); j++) {
 				this->foodGroups[i][j]->draw();
-//				std::cout <<"j = " << j << std::endl;
 			}
 		}
 	}
@@ -158,7 +155,6 @@ void Manager::draw() const {
 		this->hud.draw();
 	}
 
-//clock.draw();
 	SDL_Flip(screen);
 }
 
@@ -286,33 +282,33 @@ void Manager::play() {
 					std::cout << "Making video frames" << std::endl;
 					makeVideo = true;
 				}
-				if (keystate[SDLK_UP]) {
+				if (keystate[SDLK_w]) {
 					player->up();
 
 				}
-				if (keystate[SDLK_DOWN]) {
+				if (keystate[SDLK_s]) {
 					player->down();
 				}
-				if (keystate[SDLK_LEFT]) {
+				if (keystate[SDLK_a]) {
 					player->left();
 				}
-				if (keystate[SDLK_RIGHT]) {
+				if (keystate[SDLK_d]) {
 					player->right();
 				}
 			}
 
 			if (event.type == SDL_KEYUP) {
 
-				if (event.key.keysym.sym == SDLK_UP) {
+				if (event.key.keysym.sym == SDLK_w) {
 					this->player->stopY();
 				}
-				if (event.key.keysym.sym == SDLK_DOWN) {
+				if (event.key.keysym.sym == SDLK_s) {
 					this->player->stopY();
 				}
-				if (event.key.keysym.sym == SDLK_LEFT) {
+				if (event.key.keysym.sym == SDLK_a) {
 					this->player->stopX();
 				}
-				if (event.key.keysym.sym == SDLK_RIGHT) {
+				if (event.key.keysym.sym == SDLK_d) {
 					this->player->stopX();
 				}
 
