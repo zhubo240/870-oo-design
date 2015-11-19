@@ -28,6 +28,7 @@ public:
 	void up();
 	void down();
 
+	void shoot() const;
 protected:
 
 	const int speedX;

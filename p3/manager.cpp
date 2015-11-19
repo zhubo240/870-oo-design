@@ -41,7 +41,7 @@ Manager::Manager() :
 				io.getScreen()), nearBg("nearback"), farBg("farback"), viewport(
 				Viewport::getInstance()),
 
-		fgSprites(), bgSprites(),obs(), stars(),foodGroups(), currentSprite(),
+		fgSprites(), bgSprites(), obs(), stars(), foodGroups(), currentSprite(),
 
 		makeVideo(false), frameCount(0), username(
 				Gamedata::getInstance().getXmlStr("username")), title(
@@ -57,10 +57,9 @@ Manager::Manager() :
 	init();
 }
 
-void Manager::init(){
+void Manager::init() {
 	//player
 	fgSprites.push_back(player);
-
 
 	//generate obstacles
 	int n = Gamedata::getInstance().getXmlInt("triangle/count");
@@ -96,6 +95,7 @@ void Manager::init(){
 	for (unsigned i = 0; i < stars.size(); i++)
 		this->bgSprites.push_back(stars[i]);
 
+	//std::cout << "food groups" << std::endl;
 	//generate food groups.
 	n = Gamedata::getInstance().getXmlInt("food/group/count");
 
@@ -109,23 +109,30 @@ void Manager::init(){
 		for (int j = 0; j < Gamedata::getInstance().getRandInRange(min, max);
 				j++) {
 			//std::cout << "here" << std::endl;
-			Drawable* food = new ExplodingSprite(Sprite("food"));
+			Drawable* food = new Sprite("food");
 			food->setPosition(
-					Vector2f(i * interval + j*Gamedata::getInstance().getXmlInt("food/width"),
+					Vector2f(
+							i * interval
+									+ j
+											* Gamedata::getInstance().getXmlInt(
+													"food/width"),
 							(int) Gamedata::getInstance().getRandInRange(
 									0.3 * height, 0.8 * height)));
 			foodGroup.push_back(food);
+
 			this->fgSprites.push_back(food);
 		}
 
 		this->foodGroups.push_back(foodGroup);
 	}
 
+	//std::cout << "food groups ends " << std::endl;
+
 	currentSprite = fgSprites.begin();
 	viewport.setObjectToTrack(*currentSprite);
 }
 
-void Manager::reset(){
+void Manager::reset() {
 	this->player = new Player("car");
 	this->makeVideo = false;
 	this->clock.reset();
@@ -137,6 +144,7 @@ void Manager::reset(){
 }
 
 void Manager::draw() const {
+
 	farBg.draw();
 
 //back
@@ -159,9 +167,10 @@ void Manager::draw() const {
 		}
 	}
 
-	//io.printMessageAt("Press T to switch sprites", 10, 70);
 	io.printMessageAt(title, 10, 450);
-//	viewport.draw();
+
+	//std::cout << "front draw end" << std::endl;
+	//	viewport.draw();
 	if (hud.getVisiable()) {
 		this->hud.draw();
 	}
@@ -170,27 +179,32 @@ void Manager::draw() const {
 }
 
 bool Manager::checkCollision() {
-	for (unsigned i = 0; i < this->obs.size(); i++) {
-		int minx1 = obs[i]->X();
-		int miny1 = obs[i]->Y();
-		int maxx1 = minx1 + obs[i]->getFrame()->getWidth();
-		int maxy1 = miny1 + obs[i]->getFrame()->getHeight();
+	for (unsigned i = 0; i < this->foodGroups.size(); i++) {
+		vector<Drawable*> v = foodGroups[i];
 
-		int minx2 = this->player->X();
-		int miny2 = this->player->Y();
-		int maxx2 = minx2 + player->getFrame()->getWidth();
-		int maxy2 = miny2 + player->getFrame()->getHeight();
+		for (unsigned j = 0; j < v.size(); j++) {
+			int minx1 = v[j]->X();
+			int miny1 = v[j]->Y();
+			int maxx1 = minx1 + v[j]->getFrame()->getWidth();
+			int maxy1 = miny1 + v[j]->getFrame()->getHeight();
 
-		//left up conner
-		int minx = std::max(minx1, minx2);
-		int miny = std::max(miny1, miny2);
-		//right down conner
-		int maxx = std::min(maxx1, maxx2);
-		int maxy = std::min(maxy1, maxy2);
+			int minx2 = this->player->X();
+			int miny2 = this->player->Y();
+			int maxx2 = minx2 + player->getFrame()->getWidth();
+			int maxy2 = miny2 + player->getFrame()->getHeight();
 
-		if (!(minx > maxx || miny > maxy)) {
+			//left up conner
+			int minx = std::max(minx1, minx2);
+			int miny = std::max(miny1, miny2);
+			//right down conner
+			int maxx = std::min(maxx1, maxx2);
+			int maxy = std::min(maxy1, maxy2);
+
+			if (!(minx > maxx || miny > maxy)) {
 //			std::cout << "collision" << std::endl;
-			return true;
+				v[j]->explode();
+				return true;
+			}
 		}
 	}
 	return false;
@@ -215,6 +229,7 @@ void Manager::switchSprite() {
 }
 
 void Manager::update() {
+	//std::cout << "update" << std::endl;
 	clock.update();
 	Uint32 ticks = clock.getTicksSinceLastFrame();
 
@@ -244,6 +259,7 @@ void Manager::update() {
 }
 
 void Manager::play() {
+
 	SDL_Event event;
 	bool done = false;
 	clock.start();
@@ -261,11 +277,13 @@ void Manager::play() {
 					done = true;
 					break;
 				}
-				if(keystate[SDLK_r]){
+				if (keystate[SDLK_r]) {
 					reset();
 					std::cout << "reset" << std::endl;
 				}
+				if(keystate[SDLK_b]){
 
+				}
 				if (keystate[SDLK_F1]) {
 					if (hud.getVisiable())
 						hud.setVisiable(false);
@@ -321,7 +339,7 @@ void Manager::play() {
 			}
 		}
 		draw();
-		//done = checkCollision();
+		checkCollision();
 		update();
 
 	}

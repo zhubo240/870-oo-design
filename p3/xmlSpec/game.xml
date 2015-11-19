@@ -16,7 +16,7 @@
 </view>
 
 <world>
-  <width>150000</width>
+  <width>1500</width>
   <height>401</height>
 </world>
 
@@ -71,7 +71,7 @@
   <max>1</max>
   <min>1</min>
   </zoom>
-  <count>20</count>
+  <count>4</count>
   <transparency>true</transparency>
 </triangle>
 
@@ -82,14 +82,14 @@
   <frameInterval>20</frameInterval>
    <srcX>0</srcX>
   <srcY>0</srcY>
-  <width>37</width>
-  <height>34</height>
+  <width>32</width>
+  <height>32</height>
   <speedX>0</speedX>
   <speedY>0</speedY>
   <distance>50</distance>
   
   <chunk>
-  <size>8</size>
+  <size>10</size>
   <zoom>
   <max>1</max>
   <min>1</min>
@@ -103,12 +103,12 @@
   </zoom>
   
   <group>
-  <count>100</count>
-  <max>10</max>
+  <count>10</count>
+  <max>1</max>
   <min>1</min>
   </group>
   
-  <transparency>true</transparency>
+  <transparency>false</transparency>
 </food>
 
 <car>
@@ -138,7 +138,7 @@
 <star>
 <file>images/star.png</file>
 <startLoc x="120" y="280"/>
-<count>700</count>
+<count>20</count>
 <srcX>0</srcX>
   <srcY>0</srcY>
   <width>64</width>

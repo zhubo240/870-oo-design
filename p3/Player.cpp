@@ -94,3 +94,6 @@ void Player::down() {
 
 	this->setVelocity(v);
 }
+
+void Player::shoot() const {
+}

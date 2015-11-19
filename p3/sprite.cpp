@@ -74,7 +74,8 @@ void Sprite::draw() const {
 	Uint32 x = static_cast<Uint32>(X());
 	Uint32 y = static_cast<Uint32>(Y());
 	//TODO: you need to consider the zoom
-	frame->draw(x, y, 0., this->getZoom(), 1);
+//	frame->draw(frame->getSourceX(),frame->getSourceY(), x, y, 0., this->getZoom(), 1);
+	frame->draw(x, y);
 }
 
 void Sprite::explode() {

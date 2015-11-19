@@ -44,6 +44,7 @@ void Frame::draw(Sint16 x, Sint16 y) const {
 	SDL_BlitSurface(surface, &src, screen, &dest);
 }
 
+
 void Frame::draw(Sint16 sx, Sint16 sy, Sint16 dx, Sint16 dy) const {
 	SDL_Rect src = { sx, sy, width, height };
 	SDL_Rect dest = { dx, dy, width, height };
@@ -62,6 +63,25 @@ void Frame::draw(Sint16 x, Sint16 y, float angle, float scale,
 		x -= Viewport::getInstance().X();
 		y -= Viewport::getInstance().Y();
 		SDL_Rect dest = { x, y, 0, 0 };
+		SDL_BlitSurface(tmp, &src, screen, &dest);
+		SDL_FreeSurface(tmp);
+	}
+}
+
+//TODO: problems.
+void Frame::draw(Sint16 sx, Sint16 sy, Sint16 dx, Sint16 dy, float angle, float scale,
+		int dummy) const {
+	if (dummy) {
+		//TODO: dummy
+
+		SDL_Surface* tmp = rotozoomSurface(surface, angle, scale, SMOOTHING_ON);
+		Uint16 width = tmp->w;
+		Uint16 height = tmp->h;
+		SDL_Rect src = { sx, sy, width, height };
+		dx -= Viewport::getInstance().X();
+		dy -= Viewport::getInstance().Y();
+
+		SDL_Rect dest = { dx, dy, width, height};
 		SDL_BlitSurface(tmp, &src, screen, &dest);
 		SDL_FreeSurface(tmp);
 	}
