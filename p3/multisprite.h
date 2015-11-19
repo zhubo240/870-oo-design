@@ -15,9 +15,16 @@ public:
 
   virtual void draw() const;
   virtual void update(Uint32 ticks);
-  virtual const Frame* getFrame() const { 
-    return frames[currentFrame]; 
+  virtual const Frame* getFrame() const {
+    return frames[currentFrame];
   }
+
+//     void draw() const;
+//    void update(Uint32 ticks);
+//    const Frame* getFrame() const {
+//      return frames[currentFrame];
+//    }
+
 
 protected:
   const std::vector<Frame *> frames;

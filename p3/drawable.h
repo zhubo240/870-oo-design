@@ -7,8 +7,8 @@
 
 #include "vector2f.h"
 
-class Frame;
- 
+#include "frame.h"
+
 // Drawable is an Abstract Base Class (ABC) that
 // specifies the methods that derived classes may
 // and must have.
@@ -18,7 +18,7 @@ public:
     name(n), position(pos), velocity(vel), zoom(zoom) {}
 
   Drawable(const Drawable& s) : 
-    name(s.name), position(s.position), velocity(s.velocity)
+    name(s.name), position(s.position), velocity(s.velocity), zoom(s.zoom)
     { }
 
   virtual ~Drawable() {}
@@ -49,6 +49,8 @@ const Vector2f& getVelocity() const   { return velocity; }
   virtual bool collidedWith(const Drawable*) const { 
     throw std::string("No collidedWith");  
   }
+
+  virtual void explode() { throw name+std::string(" can't explode"); }
 
   float getZoom() const { return this->zoom;}
   void setZoom(float zoom){this->zoom = zoom;}

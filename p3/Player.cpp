@@ -14,8 +14,7 @@
 #include "vector2f.h"
 
 
-Player::Player(const string& name) : TwoWayMultiSprite(name), isUpKeyPressed(false), isDownKeyPressed(false),
-			isLeftKeyPressed(false), isRightKeyPressed(false), speedX(Gamedata::getInstance().getXmlInt("player/speedX")),
+Player::Player(const string& name) : TwoWayMultiSprite(name), speedX(Gamedata::getInstance().getXmlInt("player/speedX")),
 			speedY(Gamedata::getInstance().getXmlInt("player/speedY")){
 
 }

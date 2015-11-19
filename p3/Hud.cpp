@@ -24,7 +24,7 @@ Hud::Hud(const string& name) :
 		//TODO : why divide 2
 				Gamedata::getInstance().getXmlInt(name + "/alpha")), thickness(
 				this->height * 2), rectColors(vector<int>(3)), bordColors(
-				vector<int>(3)), maxTime(
+				vector<int>(3)), bordColor(0), maxTime(
 				Gamedata::getInstance().getXmlInt("hud/maxTime")), leftTime(
 				Gamedata::getInstance().getXmlInt("hud/maxTime")), isVisiable(
 				true), isFirstAppear(true) {
@@ -43,6 +43,15 @@ Hud::Hud(const string& name) :
 
 	this->bordColor = SDL_MapRGB(screen->format, this->bordColors[0],
 			this->bordColors[1], this->bordColors[2]);
+}
+
+
+void Hud::setVisiable(bool isVisiable){
+	this->isVisiable = isVisiable;
+}
+
+bool Hud::getVisiable() const{
+	return this->isVisiable;
 }
 
 void Hud::draw() const {
@@ -80,6 +89,7 @@ void Hud::drawMsg() const {
 	IOManager::getInstance().printMessageAt("s to go down", 0, 120);
 	IOManager::getInstance().printMessageAt("a to go left", 0, 140);
 	IOManager::getInstance().printMessageAt("d to go right", 0, 160);
+	IOManager::getInstance().printMessageAt("F1 toggle HUD", 0, 180);
 }
 
 void Hud::update(int ticks) {

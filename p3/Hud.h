@@ -21,6 +21,8 @@ using std::string;
 class Hud {
 public:
 	Hud(const string& name);
+	Hud(const Hud& hud);
+	Hud& operator=(const Hud& hud);
 	virtual ~Hud();
 
 	void update(int ticks);
@@ -29,8 +31,8 @@ public:
 	void drawRect() const;
 	void drawBord() const;
 	void drawMsg() const;
-
-	bool isVisiable;
+	void setVisiable(bool isVisiable);
+	bool getVisiable() const;
 
 private:
 	SDL_Surface* screen;
@@ -51,7 +53,7 @@ private:
 
 	int maxTime;
 	int leftTime;
-
+	bool isVisiable;
 	int isFirstAppear;
 };
 

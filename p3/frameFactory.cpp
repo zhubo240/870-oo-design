@@ -80,6 +80,7 @@ std::vector<Frame*> FrameFactory::getFrames(const std::string& name) {
 
 	SDL_Surface* surf;
 	for (unsigned i = 0; i < numberOfFrames; ++i) {
+		std::cout << i << std::endl;
 		unsigned frameX = i * width + srcX;
 		surf = ExtractSurface::getInstance().get(surface, width, height, frameX,
 				srcY);

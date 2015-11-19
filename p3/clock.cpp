@@ -16,7 +16,7 @@ Clock& Clock::getInstance() {
 }
 
 Clock::Clock() :
-		ticks(0),cap(1000 / Gamedata::getInstance().getXmlFloat("frameCap")), totalTicks(0), started(false), paused(false), sloMo(false), sumOfTicks(
+		ticks(0),cap(1000 / Gamedata::getInstance().getXmlFloat("frameCap")), totalTicks(0), started(false), startTicks(SDL_GetTicks()),paused(false), sloMo(false), sumOfTicks(
 				SDL_GetTicks()), pos(
 				Gamedata::getInstance().getXmlInt("clock/locX"),
 				Gamedata::getInstance().getXmlInt("clock/locY")) {
@@ -74,3 +74,15 @@ void Clock::unpause() {
 	std::cout << "unpause: Not implemented yet" << std::endl;
 }
 
+void Clock::reset() {
+	ticks = 0;
+	cap = 1000 / Gamedata::getInstance().getXmlFloat("frameCap");
+	totalTicks = 0;
+	started = false;
+	paused = false;
+	sloMo = false;
+	sumOfTicks = SDL_GetTicks();
+	startTicks = SDL_GetTicks();
+	pos = Vector2f(Gamedata::getInstance().getXmlInt("clock/locX"),
+					Gamedata::getInstance().getXmlInt("clock/locY"));
+}

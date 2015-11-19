@@ -9,13 +9,14 @@ class Clock {
 public:
   static Clock& getInstance();  // This class is a Singleton
   unsigned int getTicksSinceInit() const { return sumOfTicks; }
-  unsigned int getSeconds() const { return sumOfTicks/1000; }
+  unsigned int getSeconds() const { return (this->sumOfTicks - this->startTicks)/1000; }
 
   void toggleSloMo();
   bool isStarted() const { return started; }
   bool isPaused() const  { return paused;  }
   int getFps() const;
 
+  void reset();
   void start();
   void pause();
   void unpause();
@@ -25,7 +26,9 @@ private:
   unsigned int ticks;
   int cap;
   unsigned int totalTicks;
+
   bool started;
+  unsigned startTicks;
   bool paused;
   bool sloMo;
   unsigned int sumOfTicks;

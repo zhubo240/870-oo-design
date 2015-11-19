@@ -78,21 +78,33 @@
 <food>
   <file>images/food.png</file>
   <startLoc x="120" y="200"/>
-  <frames>4</frames>
+  <frames>10</frames>
   <frameInterval>20</frameInterval>
    <srcX>0</srcX>
   <srcY>0</srcY>
-  <width>63</width>
-  <height>56</height>
+  <width>37</width>
+  <height>34</height>
   <speedX>0</speedX>
   <speedY>0</speedY>
+  <distance>50</distance>
+  
+  <chunk>
+  <size>8</size>
   <zoom>
   <max>1</max>
   <min>1</min>
   </zoom>
-  <group>
-  <count>10</count>
+  <distance>100</distance>
+  </chunk>
+  
+  <zoom>
   <max>1</max>
+  <min>1</min>
+  </zoom>
+  
+  <group>
+  <count>100</count>
+  <max>10</max>
   <min>1</min>
   </group>
   

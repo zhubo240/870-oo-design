@@ -29,14 +29,6 @@ public:
 	void down();
 
 protected:
-//	float frameInterval;
-//	float minFrameDelay;
-//	float frameDelay;
-
-	bool isLeftKeyPressed;
-	bool isRightKeyPressed;
-	bool isUpKeyPressed;
-	bool isDownKeyPressed;
 
 	const int speedX;
 	const int speedY;

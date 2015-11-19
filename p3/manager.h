@@ -13,7 +13,11 @@ class Player;
 class Manager {
 public:
   Manager ();
+  Manager& operator=(const Manager& mgr);
   ~Manager ();
+
+  void init();
+  void reset();
   void play();
   void switchSprite();
 
@@ -33,10 +37,12 @@ private:
   World farBg;
   Viewport& viewport;
 
-
-  std::list<Drawable*> sprites;
+  //init in function init
+  std::list<Drawable*> fgSprites;
+  std::list<Drawable*> bgSprites;
   std::vector<Drawable*> obs;
   std::vector<Drawable*> stars;
+  vector<vector<Drawable*> > foodGroups;
   std::list<Drawable*>::iterator currentSprite;
 
   bool makeVideo;
@@ -45,21 +51,18 @@ private:
   const std::string title;
   const int frameMax;
 
-//  Drawable* runner;
-//  bool isRunnerFly;
   Player* player;
 
   Hud hud;
 
   struct Less less;
 
-  vector<vector<Drawable*> > foodGroups;
+
 
   void draw() const;
   void update();
   bool checkCollision();
 
   Manager(const Manager&);
-  Manager& operator=(const Manager&);
   void makeFrame();
 };
