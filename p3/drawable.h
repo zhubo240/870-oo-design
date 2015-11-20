@@ -25,7 +25,7 @@ public:
 
   const std::string& getName() const { return name; }
   void setName(const std::string& n) { name = n;    }
-  virtual const Frame* getFrame() const = 0;
+  virtual const Frame* getFrame() const { std::cout << " no frame" << std::endl; return NULL;};
 
   virtual void draw() const = 0;
   virtual void update(Uint32 ticks) = 0;

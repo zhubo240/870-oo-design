@@ -22,6 +22,7 @@
 #include "vector2f.h"
 #include "viewport.h"
 #include "ViewRelatedSprite.h"
+#include "Bullet.h"
 
 Manager::~Manager() {
 	std::list<Drawable*>::const_iterator ptr = fgSprites.begin();
@@ -127,6 +128,8 @@ void Manager::init() {
 	}
 
 	//std::cout << "food groups ends " << std::endl;
+
+//	this->fgSprites.push_back(new Bullet("bullet", player->getPosition(), Vector2f(-100, 0), 1));
 
 	currentSprite = fgSprites.begin();
 	viewport.setObjectToTrack(*currentSprite);

@@ -113,7 +113,7 @@
 
 <car>
 <file>images/cars.png</file>
-  <startLoc x="20000" y="280"/>
+  <startLoc x="700" y="280"/>
   <frames>6</frames>
    <numFramesOneDir>3</numFramesOneDir>
   <frameInterval>20</frameInterval>
