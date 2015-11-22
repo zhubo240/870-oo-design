@@ -16,7 +16,7 @@
 </view>
 
 <world>
-  <width>1500</width>
+  <width>3000</width>
   <height>401</height>
 </world>
 
@@ -154,7 +154,7 @@
 
 <hud>
 <position x = "0"  y="0"/>
-<width> 150 </width>
+<width> 400 </width>
 <height> 200 </height>
 <alpha>100</alpha>
 <rect red="255" green="255"  blue="255"/>

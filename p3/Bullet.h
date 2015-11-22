@@ -12,7 +12,7 @@
 #include "ioManager.h"
 #include "SDL/SDL.h"
 #include "aaline.h"
-
+#include "viewport.h"
 
 class Bullet: public Drawable {
 public:
@@ -22,10 +22,14 @@ public:
 	virtual void draw() const;
 	virtual void update(Uint32 ticks);
 
+	void init(const Vector2f& pos, const Vector2f& vel);
+	void setIsVisiable(bool v);
+	bool getIsVisiable();
 private:
 	 int worldWidth;
 	 int worldHeight;
-	 int isVisiable;
+	 bool isVisiable;
+
 
 	 SDL_Surface* screen;
 };

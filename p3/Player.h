@@ -9,6 +9,7 @@
 #define PLAYER_H_
 
 #include "TwoWayMultiSprite.h"
+#include "BulletPool.h"
 
 class Player: public TwoWayMultiSprite {
 public:
@@ -29,6 +30,7 @@ public:
 	void down();
 
 	void shoot() const;
+	void blow();
 protected:
 
 	const int speedX;

@@ -38,10 +38,8 @@ Manager::~Manager() {
 
 Manager::Manager() :
 		env(SDL_putenv(const_cast<char*>("SDL_VIDEO_CENTERED=center"))), io(
-				IOManager::getInstance()), clock(Clock::getInstance()), screen(
-				io.getScreen()), nearBg("nearback"), farBg("farback"), viewport(
-				Viewport::getInstance()),
-
+				IOManager::getInstance()), clock(Clock::getInstance()), bulletPool(BulletPool::getInstance()),
+				screen(io.getScreen()), nearBg("nearback"), farBg("farback"), viewport(Viewport::getInstance()),
 		fgSprites(), bgSprites(), obs(), stars(), foodGroups(), currentSprite(),
 
 		makeVideo(false), frameCount(0), username(
@@ -129,7 +127,7 @@ void Manager::init() {
 
 	//std::cout << "food groups ends " << std::endl;
 
-//	this->fgSprites.push_back(new Bullet("bullet", player->getPosition(), Vector2f(-100, 0), 1));
+	//this->fgSprites.push_back(new Bullet("bullet", player->getPosition(), Vector2f(-100, 0), 1));
 
 	currentSprite = fgSprites.begin();
 	viewport.setObjectToTrack(*currentSprite);
@@ -172,11 +170,16 @@ void Manager::draw() const {
 
 	io.printMessageAt(title, 10, 450);
 
+
 	//std::cout << "front draw end" << std::endl;
-	//	viewport.draw();
+//	viewport.draw();
 	if (hud.getVisiable()) {
 		this->hud.draw();
 	}
+
+	bulletPool.draw();
+
+	this->player->draw();
 
 	SDL_Flip(screen);
 }
@@ -256,6 +259,7 @@ void Manager::update() {
 		makeFrame();
 	}
 
+	bulletPool.update(ticks);
 	farBg.update();
 	nearBg.update();
 	viewport.update(); // always update viewport last
@@ -321,6 +325,10 @@ void Manager::play() {
 				}
 				if (keystate[SDLK_d]) {
 					player->right();
+				}if (keystate[SDLK_SPACE]){
+					player->shoot();
+				}if (keystate[SDLK_b]){
+					player->blow();
 				}
 			}
 
@@ -344,6 +352,5 @@ void Manager::play() {
 		draw();
 		checkCollision();
 		update();
-
 	}
 }

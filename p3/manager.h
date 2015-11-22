@@ -6,6 +6,7 @@
 #include "drawable.h"
 #include "Hud.h"
 #include "world.h"
+#include "BulletPool.h"
 
 class Clock;
 class Player;
@@ -31,6 +32,7 @@ private:
   const bool env;
   const IOManager& io;
   Clock& clock;
+  BulletPool& bulletPool;
 
   SDL_Surface * const screen;
   World nearBg;
@@ -56,6 +58,7 @@ private:
   Hud hud;
 
   struct Less less;
+
 
 
 

@@ -83,13 +83,13 @@ void Hud::drawBord() const {
 }
 
 void Hud::drawMsg() const {
-	clock.draw();
+//	clock.draw();
 	//descriptions
-	IOManager::getInstance().printMessageAt("w to go up", 0, 100);
-	IOManager::getInstance().printMessageAt("s to go down", 0, 120);
-	IOManager::getInstance().printMessageAt("a to go left", 0, 140);
-	IOManager::getInstance().printMessageAt("d to go right", 0, 160);
-	IOManager::getInstance().printMessageAt("F1 toggle HUD", 0, 180);
+//	IOManager::getInstance().printMessageAt("w to go up", 0, 100);
+//	IOManager::getInstance().printMessageAt("s to go down", 0, 120);
+//	IOManager::getInstance().printMessageAt("a to go left", 0, 140);
+//	IOManager::getInstance().printMessageAt("d to go right", 0, 160);
+//	IOManager::getInstance().printMessageAt("F1 toggle HUD", 0, 180);
 }
 
 void Hud::update(int ticks) {

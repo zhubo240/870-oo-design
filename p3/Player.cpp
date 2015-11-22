@@ -96,4 +96,14 @@ void Player::down() {
 }
 
 void Player::shoot() const {
+	Vector2f v = this->getVelocity();
+	Vector2f pos = this->getPosition();
+	if(v[0] >= 0)
+		BulletPool::getInstance().createBullet(pos[0] + this->getFrame()->getWidth(), pos[1], v[0] + 130, 0);
+	else
+		BulletPool::getInstance().createBullet(pos[0] , pos[1], v[0] - 130, 0);
+}
+
+void Player::blow() {
+
 }
