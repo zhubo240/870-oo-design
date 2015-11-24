@@ -14,10 +14,12 @@
 #include "vector2f.h"
 
 
-Player::Player(const string& name) : TwoWayMultiSprite(name), speedX(Gamedata::getInstance().getXmlInt("player/speedX")),
+Player::Player(const string& name) : MultiSprite(name), speedX(Gamedata::getInstance().getXmlInt("player/speedX")),
 			speedY(Gamedata::getInstance().getXmlInt("player/speedY")){
 
 }
+
+
 //
 //Player::Player(const Player& player) {
 //}
@@ -27,6 +29,7 @@ Player::~Player() {
 }
 
 void Player::move(Uint32 ticks) {
+	//check explode
 	Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
 	setPosition(getPosition() + incr);
 
@@ -40,13 +43,13 @@ void Player::move(Uint32 ticks) {
 	if (X() < 0) {
 		velocityX(abs(velocityX()));
 		this->X(0);
-		this->dirChanged = true;
+		//this->dirChanged = true;
 
 	}
 	if (X() > worldWidth - frameWidth) {
 		velocityX(-abs(velocityX()));
 		this->X(worldWidth - frameWidth);
-		this->dirChanged = true;
+		//this->dirChanged = true;
 	}
 }
 
@@ -105,5 +108,5 @@ void Player::shoot() const {
 }
 
 void Player::blow() {
-
+	this->explode();
 }

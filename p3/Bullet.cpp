@@ -15,6 +15,25 @@ Bullet::Bullet(const std::string name, const Vector2f& pos, const Vector2f& vel,
 				true), screen(IOManager::getInstance().getScreen()) {
 }
 
+Bullet::Bullet(const Bullet& bullet) : Drawable(bullet), worldWidth(
+		bullet.worldWidth), worldHeight(bullet.worldHeight), isVisiable(
+		bullet.isVisiable), screen(bullet.screen){
+
+}
+
+Bullet& Bullet::operator=(const Bullet& bullet){
+	//TODO: how to write it ?
+	if(this == &bullet) return *this;
+
+	Drawable::operator=(bullet);
+	this->worldWidth = bullet.worldHeight;
+	this->worldHeight = bullet.worldHeight;
+	this->isVisiable = bullet.isVisiable;
+	this->screen = bullet.screen;
+
+	return *this;
+}
+
 Bullet::~Bullet() {
 }
 

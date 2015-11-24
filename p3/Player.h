@@ -8,10 +8,10 @@
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
-#include "TwoWayMultiSprite.h"
+#include "multisprite.h"
 #include "BulletPool.h"
 
-class Player: public TwoWayMultiSprite {
+class Player: public MultiSprite {
 public:
 	Player(const string& name);
 	//Player(const Player& player);

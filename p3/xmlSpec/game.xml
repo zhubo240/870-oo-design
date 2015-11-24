@@ -76,7 +76,7 @@
 </triangle>
 
 <food>
-  <file>images/food.png</file>
+  <file>images/ghost.bmp</file>
   <startLoc x="120" y="200"/>
   <frames>10</frames>
   <frameInterval>20</frameInterval>
@@ -108,26 +108,35 @@
   <min>1</min>
   </group>
   
-  <transparency>false</transparency>
+  <transparency>true</transparency>
 </food>
 
 <car>
-<file>images/cars.png</file>
+<file>images/run.png</file>
   <startLoc x="700" y="280"/>
   <frames>6</frames>
    <numFramesOneDir>3</numFramesOneDir>
-  <frameInterval>20</frameInterval>
+  <frameInterval>60</frameInterval>
    <srcX>0</srcX>
   <srcY>0</srcY>
   <zoom>
   <max>1</max>
   <min>1</min>
   </zoom>
-  <width>200</width>
-  <height>88</height>
+  <width>80</width>
+  <height>45</height>
     <speedX>0</speedX>
   <speedY>0</speedY>
   <transparency>true</transparency>
+  
+  <chunk>
+  <size>8</size>
+  <zoom>
+  <max>1</max>
+  <min>1</min>
+  </zoom>
+  <distance>100</distance>
+  </chunk>
 </car>
 
 <player>

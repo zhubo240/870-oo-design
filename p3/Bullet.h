@@ -17,6 +17,8 @@
 class Bullet: public Drawable {
 public:
 	Bullet(const std::string name, const Vector2f& pos, const Vector2f& vel, float zoom);
+	Bullet(const Bullet&);
+	Bullet& operator=(const Bullet& bullet);
 	virtual ~Bullet();
 
 	virtual void draw() const;
@@ -25,7 +27,7 @@ public:
 	void init(const Vector2f& pos, const Vector2f& vel);
 	void setIsVisiable(bool v);
 	bool getIsVisiable();
-private:
+protected:
 	 int worldWidth;
 	 int worldHeight;
 	 bool isVisiable;

@@ -34,7 +34,6 @@ Hud::Hud(const string& name) :
 	this->rectColors[2] = Gamedata::getInstance().getXmlInt(
 			name + "/rect/blue");
 
-
 	this->bordColors[0] = Gamedata::getInstance().getXmlInt(name + "/bord/red");
 	this->bordColors[1] = Gamedata::getInstance().getXmlInt(
 			name + "/bord/green");
@@ -45,12 +44,11 @@ Hud::Hud(const string& name) :
 			this->bordColors[1], this->bordColors[2]);
 }
 
-
-void Hud::setVisiable(bool isVisiable){
+void Hud::setVisiable(bool isVisiable) {
 	this->isVisiable = isVisiable;
 }
 
-bool Hud::getVisiable() const{
+bool Hud::getVisiable() const {
 	return this->isVisiable;
 }
 
@@ -66,7 +64,8 @@ void Hud::draw() const {
 
 void Hud::drawRect() const {
 	Draw_AALine(this->screen, this->x, this->y, this->x + this->width, this->y,
-			this->thickness, this->rectColors[0], this->rectColors[1], this->rectColors[2], this->alpha);
+			this->thickness, this->rectColors[0], this->rectColors[1],
+			this->rectColors[2], this->alpha);
 }
 
 void Hud::drawBord() const {
@@ -83,13 +82,19 @@ void Hud::drawBord() const {
 }
 
 void Hud::drawMsg() const {
-//	clock.draw();
+	clock.draw();
 	//descriptions
-//	IOManager::getInstance().printMessageAt("w to go up", 0, 100);
-//	IOManager::getInstance().printMessageAt("s to go down", 0, 120);
-//	IOManager::getInstance().printMessageAt("a to go left", 0, 140);
-//	IOManager::getInstance().printMessageAt("d to go right", 0, 160);
-//	IOManager::getInstance().printMessageAt("F1 toggle HUD", 0, 180);
+	int b = -50;
+	IOManager::getInstance().printMessageAt("w to go up", 0, 100 + b);
+	IOManager::getInstance().printMessageAt("s to go down", 0, 120 + b);
+	IOManager::getInstance().printMessageAt("a to go left", 0, 140 + b);
+	IOManager::getInstance().printMessageAt("d to go right", 0, 160 + b);
+	IOManager::getInstance().printMessageAt("F1 toggle HUD", 0, 180 + b);
+	IOManager::getInstance().printMessageAt("b blow player", 0, 200 + b);
+	IOManager::getInstance().printMessageAt("space to shoot", 0, 220 + b);
+	//BulletPool
+	BulletPool::getInstance().draw();
+
 }
 
 void Hud::update(int ticks) {

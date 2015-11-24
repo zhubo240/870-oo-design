@@ -90,18 +90,18 @@ int Sprite::getDistance(const Sprite *obj) const {
 }
 
 void Sprite::update(Uint32 ticks) {
+	if (explosion) {
+			explosion->update(ticks);
+			if (explosion->chunkCount() == 0) {
+				delete explosion;
+				explosion = NULL;
+			}
+			return;
+		}
 	move(ticks);
 }
 
 void Sprite::move(Uint32 ticks) {
-	if (explosion) {
-		explosion->update(ticks);
-		if (explosion->chunkCount() == 0) {
-			delete explosion;
-			explosion = NULL;
-		}
-		return;
-	}
 
 	Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
 

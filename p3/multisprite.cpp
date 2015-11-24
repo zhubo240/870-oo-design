@@ -15,23 +15,23 @@ void MultiSprite::advanceFrame(Uint32 ticks) {
 	}
 }
 
+//TODO: why we nned to using this constructor to build a multiSprite for explosion
 MultiSprite::MultiSprite(const std::string& name, const Vector2f& pos,
 		const Vector2f& vel, vector<Frame*> frames) :
 		Drawable(name, pos, vel,
 				Gamedata::getInstance().getRandFloat(
 						Gamedata::getInstance().getXmlFloat(name + "/zoom/min"),
 						Gamedata::getInstance().getXmlFloat(
-								name + "/zoom/max"))),explosion(NULL), mulframes(
-										frames), worldWidth(
-										Gamedata::getInstance().getXmlInt("world/width")), worldHeight(
-										Gamedata::getInstance().getXmlInt("world/height")),
+								name + "/zoom/max"))), explosion(NULL), mulframes(
+				frames), worldWidth(
+				Gamedata::getInstance().getXmlInt("world/width")), worldHeight(
+				Gamedata::getInstance().getXmlInt("world/height")),
 
-								currentFrame(0), numberOfFrames(
-										Gamedata::getInstance().getXmlInt(name + "/frames")), frameInterval(
-										Gamedata::getInstance().getXmlInt(name + "/frameInterval")), timeSinceLastFrame(
-										0), frameWidth(mulframes[0]->getWidth()), frameHeight(
-										mulframes[0]->getHeight())
-				{
+		currentFrame(0), numberOfFrames(
+				Gamedata::getInstance().getXmlInt(name + "/frames")), frameInterval(
+				Gamedata::getInstance().getXmlInt(name + "/frameInterval")), timeSinceLastFrame(
+				0), frameWidth(mulframes[0]->getWidth()), frameHeight(
+				mulframes[0]->getHeight()) {
 }
 
 MultiSprite::MultiSprite(const string& name) :
@@ -45,7 +45,7 @@ MultiSprite::MultiSprite(const string& name) :
 				Gamedata::getInstance().getRandFloat(
 						Gamedata::getInstance().getXmlFloat(name + "/zoom/min"),
 						Gamedata::getInstance().getXmlFloat(
-								name + "/zoom/max"))),explosion(NULL), mulframes(
+								name + "/zoom/max"))), explosion(NULL), mulframes(
 				FrameFactory::getInstance().getFrames(name)), worldWidth(
 				Gamedata::getInstance().getXmlInt("world/width")), worldHeight(
 				Gamedata::getInstance().getXmlInt("world/height")),
@@ -76,18 +76,29 @@ void MultiSprite::draw() const {
 	Uint32 x = static_cast<Uint32>(X());
 	Uint32 y = static_cast<Uint32>(Y());
 	mulframes[currentFrame]->draw(x, y);
-	std::stringstream ss;
-	ss << "player postion : " << this->getPosition()[0] << ", "
-			<< this->getPosition()[1] << std::endl;
-	IOManager::getInstance().printMessageAt(ss.str(), 0, 80);
+//	std::stringstream ss;
+//	ss << "player postion : " << this->getPosition()[0] << ", "
+//			<< this->getPosition()[1] << std::endl;
+//	IOManager::getInstance().printMessageAt(ss.str(), 0, 80);
 }
 
 void MultiSprite::update(Uint32 ticks) {
+	if (explosion) {
+		std::cout << "multisprite update" << std::endl;
+		explosion->update(ticks);
+		if (explosion->chunkCount() == 0) {
+			delete explosion;
+			explosion = NULL;
+		}
+		return;
+	}
+
 	advanceFrame(ticks);
 	move(ticks);
 }
 
 void MultiSprite::explode() {
+	std::cout << "player blow" << std::endl;
 	if (explosion)
 		return;
 	explosion = new ExplodingMultiSprite(*this);

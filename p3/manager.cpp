@@ -76,23 +76,23 @@ void Manager::init() {
 		this->fgSprites.push_back(ob);
 	}
 
-	//generate stars
-	n = Gamedata::getInstance().getXmlInt("star/count");
-	for (int i = 0; i < n; i++) {
-		int interval = Gamedata::getInstance().getXmlInt("world/width") / n;
-		int height = this->screen->h;
-
-		Drawable* star = new ViewRelatedSprite("star");
-		star->setPosition(
-				Vector2f(i * interval,
-						(int) Gamedata::getInstance().getRandInRange(
-								0.25 * height, 0.4 * height)));
-
-		this->stars.push_back(star);
-	}
-	std::sort(stars.begin(), stars.end(), this->less);
-	for (unsigned i = 0; i < stars.size(); i++)
-		this->bgSprites.push_back(stars[i]);
+//	//generate stars
+//	n = Gamedata::getInstance().getXmlInt("star/count");
+//	for (int i = 0; i < n; i++) {
+//		int interval = Gamedata::getInstance().getXmlInt("world/width") / n;
+//		int height = this->screen->h;
+//
+//		Drawable* star = new ViewRelatedSprite("star");
+//		star->setPosition(
+//				Vector2f(i * interval,
+//						(int) Gamedata::getInstance().getRandInRange(
+//								0.25 * height, 0.4 * height)));
+//
+//		this->stars.push_back(star);
+//	}
+//	std::sort(stars.begin(), stars.end(), this->less);
+//	for (unsigned i = 0; i < stars.size(); i++)
+//		this->bgSprites.push_back(stars[i]);
 
 	//std::cout << "food groups" << std::endl;
 	//generate food groups.
@@ -134,18 +134,33 @@ void Manager::init() {
 }
 
 void Manager::reset() {
+	//TODO: some wrong happens.
+	std::list<Drawable*>::const_iterator ptr = fgSprites.begin();
+		while (ptr != fgSprites.end()) {
+			delete (*ptr);
+			++ptr;
+		}
+
+	for (std::list<Drawable*>::iterator iter = this->bgSprites.begin();
+			iter != this->bgSprites.end(); iter++)
+		delete (*iter);
+
+	this->fgSprites = std::list<Drawable*>();
+	this->bgSprites = std::list<Drawable*>();
+	this->obs = std::vector<Drawable*>();
+	this->foodGroups = vector<vector<Drawable*> >();
+
 	this->player = new Player("car");
 	this->makeVideo = false;
 	this->clock.reset();
+	this->bulletPool.reset();
 
-	//TODO: some wrong happens.
-	//this->~Manager();
 	init();
-
 }
 
 void Manager::draw() const {
 
+	//std::cout << "draw" << std::endl;
 	farBg.draw();
 
 //back
@@ -156,9 +171,9 @@ void Manager::draw() const {
 			++ptr;
 		}
 	}
+	//std::cout << "back draw end" << std::endl;
 
 	nearBg.draw();
-
 //front
 	{
 		std::list<Drawable*>::const_iterator ptr = fgSprites.begin();
@@ -167,6 +182,7 @@ void Manager::draw() const {
 			++ptr;
 		}
 	}
+	//std::cout << "front draw end" << std::endl;
 
 	io.printMessageAt(title, 10, 450);
 
@@ -177,14 +193,17 @@ void Manager::draw() const {
 		this->hud.draw();
 	}
 
-	bulletPool.draw();
+//	bulletPool.draw();
 
 	this->player->draw();
 
+	//std::cout << "player draw end " << std::endl;
 	SDL_Flip(screen);
+	//std::cout << "draw return" << std::endl;
 }
 
 bool Manager::checkCollision() {
+	//std::cout << "enter collision" << std::endl;
 	for (unsigned i = 0; i < this->foodGroups.size(); i++) {
 		vector<Drawable*> v = foodGroups[i];
 
@@ -209,10 +228,12 @@ bool Manager::checkCollision() {
 			if (!(minx > maxx || miny > maxy)) {
 //			std::cout << "collision" << std::endl;
 				v[j]->explode();
+				//std::cout << "collision return " << std::endl;
 				return true;
 			}
 		}
 	}
+	//std::cout << "collision return " << std::endl;
 	return false;
 }
 
@@ -273,6 +294,7 @@ void Manager::play() {
 
 	while (not done) {
 		while (SDL_PollEvent(&event)) {
+			//std::cout <<"here" << std::endl;
 			Uint8 *keystate = SDL_GetKeyState(NULL);
 			if (event.type == SDL_QUIT) {
 				done = true;
@@ -286,7 +308,7 @@ void Manager::play() {
 				}
 				if (keystate[SDLK_r]) {
 					reset();
-					std::cout << "reset" << std::endl;
+					//std::cout << "reset" << std::endl;
 				}
 				if(keystate[SDLK_b]){
 
