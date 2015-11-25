@@ -16,7 +16,7 @@
 </view>
 
 <world>
-  <width>3000</width>
+  <width>5000</width>
   <height>401</height>
 </world>
 
@@ -56,15 +56,15 @@
   <unused>0</unused>
 </font>
 
-<triangle>
-  <file>images/triangle.png</file>
+<ob>
+  <file>images/ob.png</file>
   <startLoc x="120" y="200"/>
   <frames>4</frames>
   <frameInterval>20</frameInterval>
    <srcX>0</srcX>
   <srcY>0</srcY>
-  <width>100</width>
-  <height>100</height>
+  <width>84</width>
+  <height>166</height>
   <speedX>0</speedX>
   <speedY>0</speedY>
   <zoom>
@@ -73,17 +73,17 @@
   </zoom>
   <count>4</count>
   <transparency>true</transparency>
-</triangle>
+</ob>
 
 <food>
-  <file>images/ghost.bmp</file>
+  <file>images/food1.png</file>
   <startLoc x="120" y="200"/>
   <frames>10</frames>
   <frameInterval>20</frameInterval>
    <srcX>0</srcX>
   <srcY>0</srcY>
-  <width>32</width>
-  <height>32</height>
+  <width>46</width>
+  <height>57</height>
   <speedX>0</speedX>
   <speedY>0</speedY>
   <distance>50</distance>
@@ -111,11 +111,11 @@
   <transparency>true</transparency>
 </food>
 
-<car>
-<file>images/run.png</file>
-  <startLoc x="700" y="280"/>
-  <frames>6</frames>
-   <numFramesOneDir>3</numFramesOneDir>
+<fox>
+<file>images/bird.png</file>
+  <startLoc x="1400" y="200"/>
+  <frames>8</frames>
+   <numFramesOneDir>4</numFramesOneDir>
   <frameInterval>60</frameInterval>
    <srcX>0</srcX>
   <srcY>0</srcY>
@@ -123,21 +123,21 @@
   <max>1</max>
   <min>1</min>
   </zoom>
-  <width>80</width>
-  <height>45</height>
+  <width>150</width>
+  <height>150</height>
     <speedX>0</speedX>
   <speedY>0</speedY>
   <transparency>true</transparency>
   
   <chunk>
-  <size>8</size>
+  <size>2</size>
   <zoom>
   <max>1</max>
   <min>1</min>
   </zoom>
   <distance>100</distance>
   </chunk>
-</car>
+</fox>
 
 <player>
 <speedX>120</speedX>

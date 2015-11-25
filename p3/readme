@@ -1,0 +1,17 @@
+Name: Bo Zhu
+Clemson Email Address: bzhu2@g.clemson.edu
+
+Project no: 3
+Project due date: 10.22
+
+Project description:
+FrameFactory is the factory class  for creating  frames and surfaces.
+TwoWaytisprite is a kind kind of sprite which could change its directions.
+In the game, I create a sprite, a two way sprite and 5 multiple sprites.
+The sprite named ghost. 
+The two way sprite is a car. 
+And multiple sprite are triangles.
+All the sprites are draw by the gimp
+You can use key T to change the target you want to track.
+The background could expand and became as large as you want.
+

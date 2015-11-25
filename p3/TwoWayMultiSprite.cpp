@@ -12,16 +12,14 @@
 TwoWayMultiSprite::TwoWayMultiSprite(const string& name) :
 		MultiSprite(name), dir(LARGER), numFramesOneDir(Gamedata::getInstance().getXmlInt(name+"/numFramesOneDir")), dirChanged(
 				false) {
+	if(this->X() >= 0) dir = LARGER;
+	else dir = SMALLER;
 }
 
 TwoWayMultiSprite::~TwoWayMultiSprite() {
 	//do nothing
 }
 
-void TwoWayMultiSprite::update(Uint32 ticks) {
-	this->move(ticks);
-	this->advanceFrame(ticks);
-}
 
 void TwoWayMultiSprite::advanceFrame(Uint32 ticks) {
 	if (this->dirChanged) {
@@ -45,7 +43,6 @@ void TwoWayMultiSprite::advanceFrame(Uint32 ticks) {
 		}
 
 	}
-
 }
 
 void TwoWayMultiSprite::move(Uint32 ticks) {
@@ -67,6 +64,7 @@ void TwoWayMultiSprite::move(Uint32 ticks) {
 		this->dirChanged = true;
 
 	}
+
 	if (X() > worldWidth - frameWidth) {
 		velocityX(-abs(velocityX()));
 		this->X(worldWidth - frameWidth);

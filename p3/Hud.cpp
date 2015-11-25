@@ -93,7 +93,7 @@ void Hud::drawMsg() const {
 	IOManager::getInstance().printMessageAt("b blow player", 0, 200 + b);
 	IOManager::getInstance().printMessageAt("space to shoot", 0, 220 + b);
 	//BulletPool
-	BulletPool::getInstance().draw();
+	BulletPool::getInstance().drawMsg();
 
 }
 

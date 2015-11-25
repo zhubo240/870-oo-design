@@ -18,7 +18,6 @@ public:
 //	 TODO : even I know it is virtual, I still need to write those there
 	  //why there are some link error, if I keep this virtual method in .h
 	//virtual void draw() const;
-	virtual void update(Uint32 ticks);
 	virtual void advanceFrame(Uint32 ticks);
 	virtual void move(Uint32 ticks);
 

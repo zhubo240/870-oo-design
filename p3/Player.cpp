@@ -14,7 +14,7 @@
 #include "vector2f.h"
 
 
-Player::Player(const string& name) : MultiSprite(name), speedX(Gamedata::getInstance().getXmlInt("player/speedX")),
+Player::Player(const string& name) : TwoWayMultiSprite(name), speedX(Gamedata::getInstance().getXmlInt("player/speedX")),
 			speedY(Gamedata::getInstance().getXmlInt("player/speedY")){
 
 }
@@ -71,6 +71,7 @@ void Player::stopY() {
 
 
 void Player::right() {
+	this->dir = LARGER;
 	Vector2f v = this->getVelocity();
 	v[0] = this->speedX;
 
@@ -78,6 +79,7 @@ void Player::right() {
 }
 
 void Player::left() {
+	this->dir = SMALLER;
 	Vector2f v = this->getVelocity();
 	v[0] = (-1) * this->speedX;
 
@@ -101,7 +103,8 @@ void Player::down() {
 void Player::shoot() const {
 	Vector2f v = this->getVelocity();
 	Vector2f pos = this->getPosition();
-	if(v[0] >= 0)
+	//player is a two way mutiple sprite
+	if(this->dir == LARGER)
 		BulletPool::getInstance().createBullet(pos[0] + this->getFrame()->getWidth(), pos[1], v[0] + 130, 0);
 	else
 		BulletPool::getInstance().createBullet(pos[0] , pos[1], v[0] - 130, 0);

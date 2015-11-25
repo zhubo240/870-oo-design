@@ -46,7 +46,7 @@ Manager::Manager() :
 				Gamedata::getInstance().getXmlStr("username")), title(
 				Gamedata::getInstance().getXmlStr("screenTitle")), frameMax(
 				Gamedata::getInstance().getXmlInt("frameMax")), player(
-				new Player("car")), hud(Hud("hud")), less() {
+				new Player("fox")), hud(Hud("hud")), less() {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		throw string("Unable to initialize SDL: ");
 	}
@@ -61,16 +61,16 @@ void Manager::init() {
 	fgSprites.push_back(player);
 
 	//generate obstacles
-	int n = Gamedata::getInstance().getXmlInt("triangle/count");
+	int n = Gamedata::getInstance().getXmlInt("ob/count");
 	for (int i = 0; i < n; i++) {
 		int interval = Gamedata::getInstance().getXmlInt("world/width") / n;
 		int height = this->screen->h;
 
-		Drawable* ob = new MultiSprite("triangle");
+		Drawable* ob = new Sprite("ob");
 		ob->setPosition(
 				Vector2f(i * interval,
 						(int) Gamedata::getInstance().getRandInRange(0,
-								height)));
+								height - ob->getFrame()->getHeight())));
 
 		this->obs.push_back(ob);
 		this->fgSprites.push_back(ob);
@@ -108,7 +108,7 @@ void Manager::init() {
 		for (int j = 0; j < Gamedata::getInstance().getRandInRange(min, max);
 				j++) {
 			//std::cout << "here" << std::endl;
-			Drawable* food = new Sprite("food");
+			Drawable* food = new MultiSprite("food");
 			food->setPosition(
 					Vector2f(
 							i * interval
@@ -150,7 +150,7 @@ void Manager::reset() {
 	this->obs = std::vector<Drawable*>();
 	this->foodGroups = vector<vector<Drawable*> >();
 
-	this->player = new Player("car");
+	this->player = new Player("fox");
 	this->makeVideo = false;
 	this->clock.reset();
 	this->bulletPool.reset();
@@ -193,7 +193,7 @@ void Manager::draw() const {
 		this->hud.draw();
 	}
 
-//	bulletPool.draw();
+	bulletPool.draw();
 
 	this->player->draw();
 

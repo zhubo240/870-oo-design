@@ -84,7 +84,7 @@ void MultiSprite::draw() const {
 
 void MultiSprite::update(Uint32 ticks) {
 	if (explosion) {
-		std::cout << "multisprite update" << std::endl;
+//		std::cout << "multisprite update" << std::endl;
 		explosion->update(ticks);
 		if (explosion->chunkCount() == 0) {
 			delete explosion;
@@ -98,7 +98,8 @@ void MultiSprite::update(Uint32 ticks) {
 }
 
 void MultiSprite::explode() {
-	std::cout << "player blow" << std::endl;
+	//std::cout << "player blow" << std::endl;
+
 	if (explosion)
 		return;
 	explosion = new ExplodingMultiSprite(*this);
