@@ -38,15 +38,16 @@ Manager::~Manager() {
 
 Manager::Manager() :
 		env(SDL_putenv(const_cast<char*>("SDL_VIDEO_CENTERED=center"))), io(
-				IOManager::getInstance()), clock(Clock::getInstance()), bulletPool(BulletPool::getInstance()),
-				screen(io.getScreen()), nearBg("nearback"), farBg("farback"), viewport(Viewport::getInstance()),
-		fgSprites(), bgSprites(), obs(), stars(), foodGroups(), currentSprite(),
+				IOManager::getInstance()), clock(Clock::getInstance()), bulletPool(
+				BulletPool::getInstance()), screen(io.getScreen()), nearBg(
+				"nearback"), farBg("farback"), viewport(
+				Viewport::getInstance()), fgSprites(), bgSprites(), obs(), enemy(), stars(), foodGroups(), currentSprite(),
 
 		makeVideo(false), frameCount(0), username(
 				Gamedata::getInstance().getXmlStr("username")), title(
 				Gamedata::getInstance().getXmlStr("screenTitle")), frameMax(
 				Gamedata::getInstance().getXmlInt("frameMax")), player(
-				new Player("fox")), hud(Hud("hud")), less() {
+				new Player("fox")), hud(Hud("hud")), less(){
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		throw string("Unable to initialize SDL: ");
 	}
@@ -57,6 +58,7 @@ Manager::Manager() :
 }
 
 void Manager::init() {
+	Manager::score = 0;
 	//player
 	fgSprites.push_back(player);
 
@@ -94,8 +96,8 @@ void Manager::init() {
 //	for (unsigned i = 0; i < stars.size(); i++)
 //		this->bgSprites.push_back(stars[i]);
 
-	//std::cout << "food groups" << std::endl;
-	//generate food groups.
+//std::cout << "food groups" << std::endl;
+//generate food groups.
 	n = Gamedata::getInstance().getXmlInt("food/group/count");
 
 	for (int i = 0; i < n; i++) {
@@ -136,10 +138,10 @@ void Manager::init() {
 void Manager::reset() {
 	//TODO: some wrong happens.
 	std::list<Drawable*>::const_iterator ptr = fgSprites.begin();
-		while (ptr != fgSprites.end()) {
-			delete (*ptr);
-			++ptr;
-		}
+	while (ptr != fgSprites.end()) {
+		delete (*ptr);
+		++ptr;
+	}
 
 	for (std::list<Drawable*>::iterator iter = this->bgSprites.begin();
 			iter != this->bgSprites.end(); iter++)
@@ -203,37 +205,59 @@ void Manager::draw() const {
 	//std::cout << "draw return" << std::endl;
 }
 
+int Manager::score = 0;
+
+bool Manager::isCollision(const Drawable* d1, const Drawable* d2) const {
+	int minx1 = d1->X();
+	int miny1 = d1->Y();
+	int maxx1 = minx1 + d1->getFrame()->getWidth();
+	int maxy1 = miny1 + d1->getFrame()->getHeight();
+
+	int minx2 = d2->X();
+	int miny2 = d2->Y();
+	int maxx2 = minx2 + d2->getFrame()->getWidth();
+	int maxy2 = miny2 + d2->getFrame()->getHeight();
+
+	//left up conner
+	int minx = std::max(minx1, minx2);
+	int miny = std::max(miny1, miny2);
+	//right down conner
+	int maxx = std::min(maxx1, maxx2);
+	int maxy = std::min(maxy1, maxy2);
+
+	if (!(minx > maxx || miny > maxy)) {
+		return true;
+	}
+
+	return false;
+}
+
 bool Manager::checkCollision() {
 	//std::cout << "enter collision" << std::endl;
 	for (unsigned i = 0; i < this->foodGroups.size(); i++) {
 		vector<Drawable*> v = foodGroups[i];
 
 		for (unsigned j = 0; j < v.size(); j++) {
-			int minx1 = v[j]->X();
-			int miny1 = v[j]->Y();
-			int maxx1 = minx1 + v[j]->getFrame()->getWidth();
-			int maxy1 = miny1 + v[j]->getFrame()->getHeight();
-
-			int minx2 = this->player->X();
-			int miny2 = this->player->Y();
-			int maxx2 = minx2 + player->getFrame()->getWidth();
-			int maxy2 = miny2 + player->getFrame()->getHeight();
-
-			//left up conner
-			int minx = std::max(minx1, minx2);
-			int miny = std::max(miny1, miny2);
-			//right down conner
-			int maxx = std::min(maxx1, maxx2);
-			int maxy = std::min(maxy1, maxy2);
-
-			if (!(minx > maxx || miny > maxy)) {
-//			std::cout << "collision" << std::endl;
-				v[j]->explode();
+			if (this->isCollision(this->player, v[j])) {
+				if(v[j]->explode())
+					score++;
 				//std::cout << "collision return " << std::endl;
 				return true;
 			}
 		}
 	}
+
+	//check with obs
+	for (unsigned i = 0; i < this->obs.size(); i++) {
+		if (this->isCollision(this->player, this->obs[i])) {
+			player->explode();
+			this->reset();
+			//std::cout << "collision return " << std::endl;
+			return true;
+		}
+
+	}
+
 	//std::cout << "collision return " << std::endl;
 	return false;
 }
@@ -311,7 +335,7 @@ void Manager::play() {
 					reset();
 					//std::cout << "reset" << std::endl;
 				}
-				if(keystate[SDLK_b]){
+				if (keystate[SDLK_b]) {
 
 				}
 				if (keystate[SDLK_F1]) {
@@ -321,9 +345,10 @@ void Manager::play() {
 						hud.setVisiable(true);
 				}
 
-				if(keystate[SDLK_F2]){
+				if (keystate[SDLK_F2]) {
 					//BulletPool
-					BulletPool::getInstance().isVisiable = !BulletPool::getInstance().isVisiable;
+					BulletPool::getInstance().isVisiable =
+							!BulletPool::getInstance().isVisiable;
 				}
 
 				if (keystate[SDLK_t]) {
@@ -353,9 +378,11 @@ void Manager::play() {
 				}
 				if (keystate[SDLK_d]) {
 					player->right();
-				}if (keystate[SDLK_SPACE]){
+				}
+				if (keystate[SDLK_SPACE]) {
 					player->shoot();
-				}if (keystate[SDLK_b]){
+				}
+				if (keystate[SDLK_b]) {
 					player->blow();
 				}
 			}

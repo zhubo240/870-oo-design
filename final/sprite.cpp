@@ -82,10 +82,12 @@ void Sprite::draw() const {
 	frame->draw(x, y);
 }
 
-void Sprite::explode() {
+bool Sprite::explode() {
 	if (explosion)
-		return;
+		return false;
+
 	explosion = new ExplodingSprite(*this);
+	return true;
 }
 
 

@@ -22,12 +22,14 @@ public:
   void play();
   void switchSprite();
 
+  static int score;
 private:
   struct Less {
 	  bool operator()(Drawable* d1, Drawable* d2){
 		  return d1->getZoom() < d2->getZoom();
 	  }
   };
+  bool isCollision(const Drawable* d1, const Drawable* d2) const;
 
   const bool env;
   const IOManager& io;
@@ -43,6 +45,7 @@ private:
   std::list<Drawable*> fgSprites;
   std::list<Drawable*> bgSprites;
   std::vector<Drawable*> obs;
+  std::vector<Drawable*> enemy;
   std::vector<Drawable*> stars;
   vector<vector<Drawable*> > foodGroups;
   std::list<Drawable*>::iterator currentSprite;
@@ -58,7 +61,6 @@ private:
   Hud hud;
 
   struct Less less;
-
 
 
 

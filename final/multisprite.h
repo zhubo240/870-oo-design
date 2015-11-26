@@ -25,7 +25,7 @@ public:
   virtual ~MultiSprite() ;
 
 
-  void explode();
+  virtual bool explode();
   virtual void draw() const;
   virtual void update(Uint32 ticks);
   virtual const Frame* getFrame() const {

@@ -20,7 +20,7 @@ public:
   virtual ~Sprite();
   Sprite& operator=(const Sprite&);
 
-  void explode();
+  bool explode();
   virtual const Frame* getFrame() const { return frame; }
   virtual void draw() const;
 

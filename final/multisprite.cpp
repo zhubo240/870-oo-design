@@ -101,12 +101,13 @@ void MultiSprite::update(Uint32 ticks) {
 	move(ticks);
 }
 
-void MultiSprite::explode() {
+bool MultiSprite::explode() {
 	//std::cout << "player blow" << std::endl;
 
 	if (explosion)
-		return;
+		return false;
 	explosion = new ExplodingMultiSprite(*this);
+	return true;
 }
 
 void MultiSprite::move(Uint32 ticks) {

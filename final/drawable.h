@@ -50,7 +50,7 @@ const Vector2f& getVelocity() const   { return velocity; }
     throw std::string("No collidedWith");  
   }
 
-  virtual void explode() { throw name+std::string(" can't explode"); }
+  virtual bool explode() { throw name+std::string(" can't explode");  }
 
   float getZoom() const { return this->zoom;}
   void setZoom(float zoom){this->zoom = zoom;}

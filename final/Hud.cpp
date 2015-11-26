@@ -13,6 +13,9 @@
 #include "clock.h"
 #include "gamedata.h"
 #include "ioManager.h"
+#include "manager.h"
+
+#include <algorithm>
 
 Hud::Hud(const string& name) :
 		screen(IOManager::getInstance().getScreen()), clock(
@@ -93,7 +96,18 @@ void Hud::drawMsg() const {
 	IOManager::getInstance().printMessageAt("b blow player", 0, 200 + b);
 	IOManager::getInstance().printMessageAt("space to shoot", 0, 220 + b);
 	IOManager::getInstance().printMessageAt("r to reset", 0, 240 + b);
-	IOManager::getInstance().printMessageAt("F1 to show pool", 0, 260 + b);
+	string s;
+	int score = Manager::score;
+	while(score){
+		s.push_back(score % 10 + '0');
+		score = score / 10;
+	}
+
+	std::reverse(s.begin(), s.end());
+
+	if(s.size() == 0) s.push_back('0');
+	IOManager::getInstance().printMessageAt("score is " + s, 0, 260 + b);
+
 }
 
 void Hud::update(int ticks) {
