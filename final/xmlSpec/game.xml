@@ -1,0 +1,175 @@
+<?xml version = "1.0"?>
+<GameData>
+<!-- screenTitle is also used to identify you and your animation. 
+     So make sure to include your name as part of the screenTitle -->
+<screenTitle>Bo Zhu's Project 5</screenTitle>
+<maxStringSize>50</maxStringSize>
+
+<frameCap>20</frameCap>
+<framesAreCapped>true</framesAreCapped>
+<frameMax>300</frameMax>
+<username>bzhu2</username>
+
+<view>
+  <width>700</width>
+  <height>401</height>
+</view>
+
+<world>
+  <width>5000</width>
+  <height>401</height>
+</world>
+
+<clock>
+  <locX>10</locX>
+  <locY>10</locY>
+</clock>
+
+
+<nearback>
+  <file>images/near.png</file>
+  <factor>1</factor>
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>708</width>
+  <height>401</height>
+  <transparency>true</transparency>
+</nearback>
+
+<farback>
+  <file>images/far.png</file>
+  <factor>2</factor>
+  <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>706</width>
+  <height>500</height>
+  <transparency>false</transparency>
+</farback>
+
+
+<font name="font">
+  <file>font/dyslexic-bold.otf</file>
+  <size>16</size>
+  <red>0</red>
+  <green>0</green>
+  <blue>0</blue>
+  <unused>0</unused>
+</font>
+
+<ob>
+  <file>images/ob.png</file>
+  <startLoc x="120" y="200"/>
+  <frames>4</frames>
+  <frameInterval>20</frameInterval>
+   <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>84</width>
+  <height>166</height>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <zoom>
+  <max>1</max>
+  <min>1</min>
+  </zoom>
+  <count>4</count>
+  <transparency>true</transparency>
+</ob>
+
+<food>
+  <file>images/food1.png</file>
+  <startLoc x="120" y="200"/>
+  <frames>10</frames>
+  <frameInterval>20</frameInterval>
+   <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>46</width>
+  <height>57</height>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <distance>50</distance>
+  
+  <chunk>
+  <size>10</size>
+  <zoom>
+  <max>1</max>
+  <min>1</min>
+  </zoom>
+  <distance>100</distance>
+  </chunk>
+  
+  <zoom>
+  <max>1</max>
+  <min>1</min>
+  </zoom>
+  
+  <group>
+  <count>10</count>
+  <max>1</max>
+  <min>1</min>
+  </group>
+  
+  <transparency>true</transparency>
+</food>
+
+<fox>
+<file>images/bird.png</file>
+  <startLoc x="1400" y="200"/>
+  <frames>8</frames>
+   <numFramesOneDir>4</numFramesOneDir>
+  <frameInterval>60</frameInterval>
+   <srcX>0</srcX>
+  <srcY>0</srcY>
+  <zoom>
+  <max>1</max>
+  <min>1</min>
+  </zoom>
+  <width>150</width>
+  <height>150</height>
+    <speedX>0</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+  
+  <chunk>
+  <size>2</size>
+  <zoom>
+  <max>1</max>
+  <min>1</min>
+  </zoom>
+  <distance>100</distance>
+  </chunk>
+</fox>
+
+<player>
+<speedX>120</speedX>
+<speedY>120</speedY>
+</player>
+
+<star>
+<file>images/star.png</file>
+<startLoc x="120" y="280"/>
+<count>20</count>
+<srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>64</width>
+  <height>53</height>
+    <speedX>0</speedX>
+  <speedY>0</speedY>
+  <zoom>
+  <max>0.5</max>
+  <min>0.3</min>
+  </zoom>
+<transparency>true</transparency>
+</star>
+
+<hud>
+<position x = "0"  y="0"/>
+<width> 200 </width>
+<height> 240 </height>
+<alpha>100</alpha>
+<rect red="255" green="255"  blue="255"/>
+<bord thick = "10" red="0" green="255"  blue="0" />
+<maxTime>2000</maxTime>
+</hud>
+
+
+</GameData>

@@ -1,0 +1,15 @@
+Name: Bo Zhu
+Clemson Email Address: bzhu2@g.clemson.edu
+
+Project no: 5
+Project due date: 11.25
+
+Project description:
+In this project,I focus on the explosion, collision, shoot, pool.
+First, explosion. In this project, when the player hit the coin, the coin will explode and then reapear. And the palyer self could explode as well. When press the 'b' key in key board, the player , the bird will explode into pieces.
+Second, my code will detect whether the player collide with coin. If collision occur, the coin will explode.
+Third, press the space key, the bird would shoot a bullet. The bullet would disappear when it reach the world's boundary.
+Fourth, all the bullet are pooled in a bullet pool. So, if there are free bullet, the bullet pool would get one from the freelist instead new a bullet. When the bullet disappear, add the bullet into freelist.
+
+
+
