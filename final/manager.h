@@ -45,7 +45,7 @@ private:
   std::list<Drawable*> fgSprites;
   std::list<Drawable*> bgSprites;
   std::vector<Drawable*> obs;
-  std::vector<Drawable*> enemy;
+  std::vector<Drawable*> enemies;
   std::vector<Drawable*> stars;
   vector<vector<Drawable*> > foodGroups;
   std::list<Drawable*>::iterator currentSprite;

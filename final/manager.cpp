@@ -23,6 +23,7 @@
 #include "viewport.h"
 #include "ViewRelatedSprite.h"
 #include "Bullet.h"
+#include "SmartEnemy.h"
 
 Manager::~Manager() {
 	std::list<Drawable*>::const_iterator ptr = fgSprites.begin();
@@ -41,7 +42,7 @@ Manager::Manager() :
 				IOManager::getInstance()), clock(Clock::getInstance()), bulletPool(
 				BulletPool::getInstance()), screen(io.getScreen()), nearBg(
 				"nearback"), farBg("farback"), viewport(
-				Viewport::getInstance()), fgSprites(), bgSprites(), obs(), enemy(), stars(), foodGroups(), currentSprite(),
+				Viewport::getInstance()), fgSprites(), bgSprites(), obs(), enemies(), stars(), foodGroups(), currentSprite(),
 
 		makeVideo(false), frameCount(0), username(
 				Gamedata::getInstance().getXmlStr("username")), title(
@@ -61,6 +62,12 @@ void Manager::init() {
 	Manager::score = 0;
 	//player
 	fgSprites.push_back(player);
+
+	//generate enemy
+	Drawable* tmp = new SmartEnemy("enemy", this->player);
+	this->enemies.push_back(tmp);
+	fgSprites.push_back(tmp);
+
 
 	//generate obstacles
 	int n = Gamedata::getInstance().getXmlInt("ob/count");
@@ -258,6 +265,18 @@ bool Manager::checkCollision() {
 
 	}
 
+	//enemies
+	for (unsigned i = 0; i < this->enemies.size(); i++) {
+		if (this->isCollision(this->player, this->enemies[i])) {
+			std::cout << "collision with enemy " << std::endl;
+			player->explode();
+			this->reset();
+
+			return true;
+		}
+
+	}
+
 	//std::cout << "collision return " << std::endl;
 	return false;
 }
@@ -282,6 +301,7 @@ void Manager::switchSprite() {
 
 void Manager::update() {
 	//std::cout << "update" << std::endl;
+
 	clock.update();
 	Uint32 ticks = clock.getTicksSinceLastFrame();
 

@@ -111,6 +111,28 @@
   <transparency>true</transparency>
 </food>
 
+<enemy>
+<file>images/food.png</file>
+  <startLoc x="1800" y="300"/>
+  <frames>1</frames>
+  <frameInterval>20</frameInterval>
+   <srcX>0</srcX>
+  <srcY>0</srcY>
+  <width>32</width>
+  <height>32</height>
+  <speedX>-100</speedX>
+  <speedY>0</speedY>
+  <zoom>
+  <max>1</max>
+  <min>1</min>
+  </zoom>
+  <aimDis>
+  200
+  </aimDis>
+  
+  <transparency>true</transparency>
+</enemy>
+
 <fox>
 <file>images/bird.png</file>
   <startLoc x="1400" y="200"/>
