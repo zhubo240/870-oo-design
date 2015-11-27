@@ -7,6 +7,7 @@
 #include "Hud.h"
 #include "world.h"
 #include "BulletPool.h"
+#include "EnemyPool.h"
 
 class Clock;
 class Player;
@@ -57,7 +58,7 @@ private:
   const int frameMax;
 
   Player* player;
-
+  EnemyPool& enemyPool;
   Hud hud;
 
   struct Less less;

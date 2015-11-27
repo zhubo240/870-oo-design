@@ -15,10 +15,16 @@ public:
 	SmartEnemy(const string& name, const Drawable* target);
 	virtual ~SmartEnemy();
 
+	bool getIsVisiable();
+	void setIsVisiable(bool v);
+	void init(const Vector2f v);
+
 protected:
 	virtual void move(Uint32 ticks);
 	const Drawable* const target;
 	const int aimDis;
+
+	bool isVisiable;
 };
 
 #endif /* SMARTENEMY_H_ */

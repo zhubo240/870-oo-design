@@ -10,9 +10,24 @@
 
 SmartEnemy::SmartEnemy(const string& name, const Drawable* target) :
 		MultiSprite(name), target(target), aimDis(
-				Gamedata::getInstance().getXmlInt(name + "/aimDis")) {
+				Gamedata::getInstance().getXmlInt(name + "/aimDis")), isVisiable(true) {
 
 }
+
+void SmartEnemy::init(const Vector2f pos){
+	this->setPosition(pos);
+	this->isVisiable = true;
+}
+
+bool SmartEnemy::getIsVisiable(){
+	return this->isVisiable;
+}
+
+
+void SmartEnemy::setIsVisiable(bool v){
+	this->isVisiable = v;
+}
+
 //This move strategy
 // distance to aim
 //

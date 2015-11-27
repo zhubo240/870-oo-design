@@ -48,7 +48,7 @@ Manager::Manager() :
 				Gamedata::getInstance().getXmlStr("username")), title(
 				Gamedata::getInstance().getXmlStr("screenTitle")), frameMax(
 				Gamedata::getInstance().getXmlInt("frameMax")), player(
-				new Player("fox")), hud(Hud("hud")), less(){
+				new Player("fox")), hud(Hud("hud")), enemyPool(EnemyPool::getInstance(player)), less(){
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		throw string("Unable to initialize SDL: ");
 	}
@@ -62,12 +62,6 @@ void Manager::init() {
 	Manager::score = 0;
 	//player
 	fgSprites.push_back(player);
-
-	//generate enemy
-	Drawable* tmp = new SmartEnemy("enemy", this->player);
-	this->enemies.push_back(tmp);
-	fgSprites.push_back(tmp);
-
 
 	//generate obstacles
 	int n = Gamedata::getInstance().getXmlInt("ob/count");
@@ -205,7 +199,11 @@ void Manager::draw() const {
 	bulletPool.draw();
 	bulletPool.drawMsg();
 
+	enemyPool.draw();
+	enemyPool.drawMsg();
+
 	this->player->draw();
+
 
 	//std::cout << "player draw end " << std::endl;
 	SDL_Flip(screen);
@@ -262,8 +260,20 @@ bool Manager::checkCollision() {
 			//std::cout << "collision return " << std::endl;
 			return true;
 		}
-
 	}
+
+//	//check with enemy
+//	std::list<SmartEnemy*> enemies = this->enemyPool.getEnemies();
+//	for (unsigned i = 0; i < enemies.size(); i++) {
+//			if (this->isCollision(this->player, this->enemies[i])) {
+//
+//				player->explode();
+//				this->reset();
+//				//std::cout << "collision return " << std::endl;
+//				return true;
+//			}
+//		}
+//
 
 	//enemies
 	for (unsigned i = 0; i < this->enemies.size(); i++) {
@@ -325,7 +335,9 @@ void Manager::update() {
 		makeFrame();
 	}
 
+	enemyPool.update(ticks);
 	bulletPool.update(ticks);
+
 	farBg.update();
 	nearBg.update();
 	viewport.update(); // always update viewport last

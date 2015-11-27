@@ -18,6 +18,22 @@ public:
   void setObjectToTrack(const Drawable *obj);
   const Drawable* getObjectToTrack() const { return objectToTrack; } 
 
+unsigned getViewHeight() const {
+		return viewHeight;
+	}
+
+	void setViewHeight(unsigned viewHeight) {
+		this->viewHeight = viewHeight;
+	}
+
+	unsigned getViewWidth() const {
+		return viewWidth;
+	}
+
+	void setViewWidth(unsigned viewWidth) {
+		this->viewWidth = viewWidth;
+	}
+
 private:
   const Gamedata& gdata;
   Vector2f position;
