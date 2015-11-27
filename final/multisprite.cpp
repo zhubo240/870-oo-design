@@ -31,7 +31,8 @@ MultiSprite::MultiSprite(const std::string& name, const Vector2f& pos,
 				Gamedata::getInstance().getXmlInt(name + "/frames")), frameInterval(
 				Gamedata::getInstance().getXmlInt(name + "/frameInterval")), timeSinceLastFrame(
 				0), frameWidth(mulframes[0]->getWidth()), frameHeight(
-				mulframes[0]->getHeight()) {
+				mulframes[0]->getHeight()), strategies(), strategy() {
+	this->initCollision();
 }
 
 MultiSprite::MultiSprite(const string& name) :
@@ -54,7 +55,8 @@ MultiSprite::MultiSprite(const string& name) :
 				Gamedata::getInstance().getXmlInt(name + "/frames")), frameInterval(
 				Gamedata::getInstance().getXmlInt(name + "/frameInterval")), timeSinceLastFrame(
 				0), frameWidth(mulframes[0]->getWidth()), frameHeight(
-				mulframes[0]->getHeight()) {
+				mulframes[0]->getHeight()), strategies(), strategy() {
+	this->initCollision();
 }
 
 //TODO: do I need to write a copy constructor ? is there default one ?
@@ -63,12 +65,17 @@ MultiSprite::MultiSprite(const MultiSprite& s) :
 				s.worldWidth), worldHeight(s.worldHeight), currentFrame(
 				s.currentFrame), numberOfFrames(numberOfFrames), frameInterval(
 				frameInterval), timeSinceLastFrame(timeSinceLastFrame), frameWidth(
-				frameWidth), frameHeight(frameHeight) {
+				frameWidth), frameHeight(frameHeight), strategies(), strategy() {
+	this->initCollision();
 
 }
 
 MultiSprite::~MultiSprite(){
 	delete this->explosion;
+
+	for(unsigned i = 0; i < this->strategies.size(); i++)
+		delete this->strategies[i];
+
 }
 
 void MultiSprite::draw() const {
@@ -131,4 +138,16 @@ void MultiSprite::move(Uint32 ticks) {
 
 int MultiSprite::getDistance(const Drawable* obj) const {
 	return hypot(X() - obj->X(), Y() - obj->Y());
+}
+
+
+void MultiSprite::initCollision() {
+		  this->strategies.push_back(new RectangularCollisionStrategy());
+		  this->strategies.push_back(new MidPointCollisionStrategy());
+		  this->strategies.push_back(new PerPixelCollisionStrategy());
+		  this->strategy = this->strategies[2];
+}
+
+bool MultiSprite::collidedWith(const Drawable* d) const {
+  return strategy->execute(*this, *d);
 }

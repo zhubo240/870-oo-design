@@ -5,7 +5,8 @@
 #include <string>
 
 #include "drawable.h"
-
+#include "collisionStrategy.h"
+#include "vector"
 class ExplodingSprite;
 //#include "ExplodingSprite.h"
 
@@ -27,14 +28,22 @@ public:
   virtual void update(Uint32 ticks);
 
   virtual void move(Uint32 ticks);
+  virtual bool collidedWith(const Drawable*) const;
 
 protected:
   ExplodingSprite* explosion;
+
   const Frame * frame;
   int frameWidth;
   int frameHeight;
   int worldWidth;
   int worldHeight;
+
+  std::vector<CollisionStrategy*> strategies;
+  CollisionStrategy * strategy;
+
   int getDistance(const Sprite*) const;
+
+  void initCollision();
 };
 #endif

@@ -33,14 +33,17 @@ Sprite::Sprite(const std::string& name) :
 		 frameWidth(FrameFactory::getInstance().getFrame(name)->getWidth() * this->getZoom()),
 				frameHeight(FrameFactory::getInstance().getFrame(name)->getHeight() * this->getZoom()),
 				worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
-				worldHeight(Gamedata::getInstance().getXmlInt("world/height")){
+				worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
+				strategies(), strategy( NULL ){
+	initCollision();
 }
 
 Sprite::Sprite(const Sprite& s) :
 		Drawable(s), explosion(NULL), frame(s.frame), frameWidth(s.getFrame()->getWidth()), frameHeight(
 				s.getFrame()->getHeight()), worldWidth(
 				Gamedata::getInstance().getXmlInt("world/width")), worldHeight(
-				Gamedata::getInstance().getXmlInt("world/height")) {
+				Gamedata::getInstance().getXmlInt("world/height")), strategies(), strategy(NULL){
+	initCollision();
 }
 
 //TODO: this kind of constructor, for chucks
@@ -51,11 +54,15 @@ Sprite::Sprite(const string& name, const Vector2f& pos, const Vector2f& vel,
 				explosion(NULL), frame(frm), frameWidth(
 				frame->getWidth()), frameHeight(frame->getHeight()), worldWidth(
 				Gamedata::getInstance().getXmlInt("world/width")), worldHeight(
-				Gamedata::getInstance().getXmlInt("world/height")) {
+				Gamedata::getInstance().getXmlInt("world/height")), strategies(), strategy( NULL ) {
+	initCollision();
 }
 
 Sprite::~Sprite(){
 	delete this->explosion;
+
+	for(unsigned i = 0; i < this->strategies.size(); i++)
+		delete this->strategies[i];
 }
 
 Sprite& Sprite::operator=(const Sprite& rhs) {
@@ -66,8 +73,16 @@ Sprite& Sprite::operator=(const Sprite& rhs) {
 	frameHeight = rhs.frameHeight;
 	worldWidth = rhs.worldWidth;
 	worldHeight = rhs.worldHeight;
+
+	//TODO;
+	for(unsigned i = 0; i < this->strategies.size(); i++){
+		*this->strategies[i] = *rhs.strategies[i];
+	}
+	*this->strategy = *rhs.strategy;
+
 	return *this;
 }
+
 
 void Sprite::draw() const {
 	if (explosion) {
@@ -127,3 +142,15 @@ void Sprite::move(Uint32 ticks) {
 			velocityX(-abs(velocityX()));
 		}
 }
+
+bool Sprite::collidedWith(const Drawable* d) const {
+  return strategy->execute(*this, *d);
+}
+
+void Sprite::initCollision() {
+		  this->strategies.push_back(new RectangularCollisionStrategy());
+		  this->strategies.push_back(new MidPointCollisionStrategy());
+		  this->strategies.push_back(new PerPixelCollisionStrategy());
+		  this->strategy = this->strategies[2];
+}
+

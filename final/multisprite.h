@@ -7,7 +7,7 @@
 #include <sstream>
 
 #include "drawable.h"
-
+#include "collisionStrategy.h"
 
 using std::string;
 using std::vector;
@@ -31,6 +31,7 @@ public:
   virtual const Frame* getFrame() const {
     return mulframes[currentFrame];
   }
+  virtual bool collidedWith(const Drawable*) const;
 
 //     void draw() const;
 //    void update(Uint32 ticks);
@@ -53,11 +54,16 @@ protected:
   int frameWidth;
   int frameHeight;
 
+  std::vector<CollisionStrategy*> strategies;
+  CollisionStrategy * strategy;
+
+
   virtual void advanceFrame(Uint32 ticks);
   virtual void move(Uint32 ticks);
 
 
   int getDistance(const Drawable* obj) const;
+  void initCollision();
 
 };
 #endif

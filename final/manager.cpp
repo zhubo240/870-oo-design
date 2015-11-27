@@ -157,7 +157,7 @@ void Manager::reset() {
 	this->makeVideo = false;
 	this->clock.reset();
 	this->bulletPool.reset();
-
+	this->enemyPool.reset();
 	init();
 }
 
@@ -243,7 +243,7 @@ bool Manager::checkCollision() {
 		vector<Drawable*> v = foodGroups[i];
 
 		for (unsigned j = 0; j < v.size(); j++) {
-			if (this->isCollision(this->player, v[j])) {
+			if (this->player->collidedWith(v[j])) {
 				if(v[j]->explode())
 					score++;
 				//std::cout << "collision return " << std::endl;
@@ -254,7 +254,7 @@ bool Manager::checkCollision() {
 
 	//check with obs
 	for (unsigned i = 0; i < this->obs.size(); i++) {
-		if (this->isCollision(this->player, this->obs[i])) {
+		if (this->player->collidedWith(this->obs[i])) {
 			player->explode();
 			this->reset();
 			//std::cout << "collision return " << std::endl;
@@ -262,30 +262,18 @@ bool Manager::checkCollision() {
 		}
 	}
 
-//	//check with enemy
-//	std::list<SmartEnemy*> enemies = this->enemyPool.getEnemies();
-//	for (unsigned i = 0; i < enemies.size(); i++) {
-//			if (this->isCollision(this->player, this->enemies[i])) {
-//
-//				player->explode();
-//				this->reset();
-//				//std::cout << "collision return " << std::endl;
-//				return true;
-//			}
-//		}
-//
+	//check with enemy
+	for (std::list<SmartEnemy*>::iterator iter; iter != this->enemyPool.getEnemies().end(); iter++) {
+			if (this->player->collidedWith(*iter) ) {
 
-	//enemies
-	for (unsigned i = 0; i < this->enemies.size(); i++) {
-		if (this->isCollision(this->player, this->enemies[i])) {
-			std::cout << "collision with enemy " << std::endl;
-			player->explode();
-			this->reset();
-
-			return true;
+				player->explode();
+				this->reset();
+				//std::cout << "collision return " << std::endl;
+				return true;
+			}
 		}
 
-	}
+
 
 	//std::cout << "collision return " << std::endl;
 	return false;
