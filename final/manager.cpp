@@ -42,7 +42,7 @@ Manager::Manager() :
 				IOManager::getInstance()), clock(Clock::getInstance()), bulletPool(
 				BulletPool::getInstance()), screen(io.getScreen()), nearBg(
 				"nearback"), farBg("farback"), viewport(
-				Viewport::getInstance()), fgSprites(), bgSprites(), obs(), enemies(), stars(), foodGroups(), currentSprite(),
+				Viewport::getInstance()), fgSprites(), bgSprites(), obs(),  stars(), foodGroups(), currentSprite(),
 
 		makeVideo(false), frameCount(0), username(
 				Gamedata::getInstance().getXmlStr("username")), title(
@@ -238,7 +238,7 @@ bool Manager::isCollision(const Drawable* d1, const Drawable* d2) const {
 }
 
 bool Manager::checkCollision() {
-	//std::cout << "enter collision" << std::endl;
+//	std::cout << "check foods collision" << std::endl;
 	for (unsigned i = 0; i < this->foodGroups.size(); i++) {
 		vector<Drawable*> v = foodGroups[i];
 
@@ -246,33 +246,35 @@ bool Manager::checkCollision() {
 			if (this->player->collidedWith(v[j])) {
 				if(v[j]->explode())
 					score++;
-				//std::cout << "collision return " << std::endl;
-				return true;
+//				std::cout << "food collision return" << std::endl;
 			}
 		}
 	}
 
+//	std::cout << "check obs collision" << std::endl;
 	//check with obs
 	for (unsigned i = 0; i < this->obs.size(); i++) {
 		if (this->player->collidedWith(this->obs[i])) {
 			player->explode();
-			this->reset();
-			//std::cout << "collision return " << std::endl;
+//			this->reset();
+//			std::cout << "obs collision return" << std::endl;
 			return true;
 		}
 	}
 
+//	std::cout << "check enemy collision" << std::endl;
+	std::list<SmartEnemy*> enemies = this->enemyPool.getEnemies();
 	//check with enemy
-	for (std::list<SmartEnemy*>::iterator iter; iter != this->enemyPool.getEnemies().end(); iter++) {
+	for (std::list<SmartEnemy*>::iterator iter = enemies.begin(); iter != enemies.end(); iter++) {
+//		std::cout << "get a enemy" << std::endl;
 			if (this->player->collidedWith(*iter) ) {
 
 				player->explode();
-				this->reset();
-				//std::cout << "collision return " << std::endl;
+//				this->reset();
+//				std::cout << "enemy collision return " << std::endl;
 				return true;
 			}
 		}
-
 
 
 	//std::cout << "collision return " << std::endl;

@@ -93,9 +93,10 @@ void EnemyPool::update(Uint32 ticks) {
 			iter++;
 	}
 
-	if(this->enemies.empty()){
+	if(this->enemies.size() < 1){
 //		std::cout << "create enemy" << std::endl;
 		this->createEnemy();
+
 //		std::cout << "enemy num is " << this->enemies.size() << std::endl;
 	}
 }

@@ -33,18 +33,21 @@ void SmartEnemy::setIsVisiable(bool v){
 //
 void SmartEnemy::move(Uint32 ticks) {
 	int dis = this->getDistance(this->target);
-	if (this->X() > this->target->X()) {
+	if (this->X() > this->target->X()+ target->getFrame()->getWidth()/2) {
 		if (dis <= this->aimDis) {
 			//change dir
 			int v = this->getVelocity().magnitude();
 			Vector2f diffPos = this->target->getPosition()
+					+ Vector2f(target->getFrame()->getWidth()/2, target->getFrame()->getHeight()/2)
 					- this->getPosition();
+
 			float ratio = v / diffPos.magnitude();
+			std::cout << diffPos[0] << ", " << diffPos[0] << ", " << ratio << std::endl;
 			this->setVelocity(ratio * diffPos);
 		}
 	}
 
-	if (this->X() <= this->target->X()) {
+	if (this->X() <= this->target->X() + target->getFrame()->getWidth()/2) {
 		int v = this->getVelocity().magnitude();
 		this->setVelocity(Vector2f(-1*v, 0));
 	}

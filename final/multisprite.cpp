@@ -150,4 +150,5 @@ void MultiSprite::initCollision() {
 
 bool MultiSprite::collidedWith(const Drawable* d) const {
   return strategy->execute(*this, *d);
+//	return true;
 }
