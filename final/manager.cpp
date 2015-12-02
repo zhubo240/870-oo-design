@@ -48,7 +48,7 @@ Manager::Manager() :
 				Gamedata::getInstance().getXmlStr("username")), title(
 				Gamedata::getInstance().getXmlStr("screenTitle")), frameMax(
 				Gamedata::getInstance().getXmlInt("frameMax")), player(
-				new Player("fox")), hud(Hud("hud")), enemyPool(EnemyPool::getInstance(player)), less(){
+				new Player("fox")), hud(Hud("hud")), enemyPool(EnemyPool::getInstance(player)), less(), sound(){
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		throw string("Unable to initialize SDL: ");
 	}
@@ -244,8 +244,10 @@ bool Manager::checkCollision() {
 
 		for (unsigned j = 0; j < v.size(); j++) {
 			if (this->player->collidedWith(v[j])) {
-				if(v[j]->explode())
+				if(v[j]->explode()){
 					score++;
+					sound[2];
+				}
 //				std::cout << "food collision return" << std::endl;
 			}
 		}
@@ -256,6 +258,7 @@ bool Manager::checkCollision() {
 	for (unsigned i = 0; i < this->obs.size(); i++) {
 		if (this->player->collidedWith(this->obs[i])) {
 			player->explode();
+			sound[1];
 //			this->reset();
 //			std::cout << "obs collision return" << std::endl;
 			return true;
@@ -270,6 +273,7 @@ bool Manager::checkCollision() {
 			if (this->player->collidedWith(*iter) ) {
 
 				player->explode();
+				sound[1];
 //				this->reset();
 //				std::cout << "enemy collision return " << std::endl;
 				return true;

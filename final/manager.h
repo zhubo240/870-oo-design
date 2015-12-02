@@ -8,6 +8,7 @@
 #include "world.h"
 #include "BulletPool.h"
 #include "EnemyPool.h"
+#include "sound.h"
 
 class Clock;
 class Player;
@@ -62,6 +63,7 @@ private:
 
   struct Less less;
 
+  SDLSound sound;
 
 
   void draw() const;
