@@ -129,6 +129,16 @@
   <aimDis>
   200
   </aimDis>
+
+  <chunk>
+  <size>2</size>
+  <zoom>
+  <max>1</max>
+  <min>1</min>
+  </zoom>
+  <distance>100</distance>
+  </chunk>
+f
   
   <transparency>true</transparency>
 </enemy>

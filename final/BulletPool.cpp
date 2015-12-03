@@ -24,6 +24,7 @@ BulletPool::~BulletPool(){
 }
 
 void BulletPool::reset(){
+	this->isVisiable = true;
 	for (std::list<Bullet*>::iterator iter = this->bullets.begin();
 				iter != this->bullets.end(); iter++) {
 			delete *iter;
@@ -56,7 +57,7 @@ void BulletPool::draw() {
 void BulletPool::drawMsg(){
 	if(this->isVisiable){
 	//freeList
-	int x  = 300, y = 70;
+	int x  = 70, y = 200;
 	std::stringstream s;
 	s << this->freeList.size();
 	IOManager::getInstance().printMessageAt("freelist size = " + s.str(), x, y);

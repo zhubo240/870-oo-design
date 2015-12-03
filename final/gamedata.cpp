@@ -70,7 +70,7 @@ const string& Gamedata::getXmlStr(const string& tag) const {
 void Gamedata::displayData() const {
   std::map<string, string>::const_iterator ptr = gameData.begin();
   while ( ptr != gameData.end() ) {
-    std::cout << ptr->first << ", " << ptr->second << std::endl;
+//    std::cout << ptr->first << ", " << ptr->second << std::endl;
     ++ptr;
   }
 }

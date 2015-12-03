@@ -48,13 +48,16 @@ Manager::Manager() :
 				Gamedata::getInstance().getXmlStr("username")), title(
 				Gamedata::getInstance().getXmlStr("screenTitle")), frameMax(
 				Gamedata::getInstance().getXmlInt("frameMax")), player(
-				new Player("fox")), hud(Hud("hud")), enemyPool(EnemyPool::getInstance(player)), less(), sound(){
+				new Player("fox")), hud(Hud("hud")), enemyPool(EnemyPool::getInstance(player)), less(), sound(), isGod(false){
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		throw string("Unable to initialize SDL: ");
 	}
 	SDL_WM_SetCaption(title.c_str(), NULL);
 	atexit(SDL_Quit);
 
+	//TODO:
+	//player
+	//
 	init();
 }
 
@@ -158,6 +161,9 @@ void Manager::reset() {
 	this->clock.reset();
 	this->bulletPool.reset();
 	this->enemyPool.reset();
+
+	this->isGod = false;
+
 	init();
 }
 
@@ -238,6 +244,7 @@ bool Manager::isCollision(const Drawable* d1, const Drawable* d2) const {
 }
 
 bool Manager::checkCollision() {
+	if(isGod) return false;
 //	std::cout << "check foods collision" << std::endl;
 	for (unsigned i = 0; i < this->foodGroups.size(); i++) {
 		vector<Drawable*> v = foodGroups[i];
@@ -270,7 +277,7 @@ bool Manager::checkCollision() {
 	//check with enemy
 	for (std::list<SmartEnemy*>::iterator iter = enemies.begin(); iter != enemies.end(); iter++) {
 //		std::cout << "get a enemy" << std::endl;
-			if (this->player->collidedWith(*iter) ) {
+			if (this->player->collidedWith(*iter) && (*iter)->getExplosion() == NULL) {
 
 				player->explode();
 				sound[1];
@@ -280,6 +287,19 @@ bool Manager::checkCollision() {
 			}
 		}
 
+	//check collision with
+	std::list<Bullet*> bullets = this->bulletPool.getBullets();
+	for(std::list<Bullet*>::iterator iterb = bullets.begin(); iterb != bullets.end(); iterb++){
+	for (std::list<SmartEnemy*>::iterator itere = enemies.begin(); itere != enemies.end(); itere++) {
+
+			if((*iterb)->collidedWith((*itere)) && (*itere)->getExplosion() == NULL){
+//				std::cout << "enemy bullet collision" << std::endl;
+				(*itere)->explode();
+				(*iterb)->setIsVisiable(false);
+				sound[4];
+			}
+		}
+	}
 
 	//std::cout << "collision return " << std::endl;
 	return false;
@@ -411,6 +431,9 @@ void Manager::play() {
 				if (keystate[SDLK_b]) {
 					player->blow();
 				}
+				if (keystate[SDLK_g]) {
+					this->isGod = !this->isGod;
+				}
 			}
 
 			if (event.type == SDL_KEYUP) {
@@ -430,8 +453,11 @@ void Manager::play() {
 
 			}
 		}
+
 		draw();
-		checkCollision();
+		if(checkCollision())
+			this->reset();
+
 		update();
 	}
 }

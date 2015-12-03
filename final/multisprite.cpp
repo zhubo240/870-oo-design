@@ -81,6 +81,7 @@ MultiSprite::~MultiSprite(){
 void MultiSprite::draw() const {
 	if (explosion) {
 		explosion->draw();
+
 		return;
 	}
 

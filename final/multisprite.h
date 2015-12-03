@@ -33,7 +33,13 @@ public:
   }
   virtual bool collidedWith(const Drawable*) const;
 
-//     void draw() const;
+
+	ExplodingMultiSprite* getExplosion() const {
+		return explosion;
+	}
+
+
+	//     void draw() const;
 //    void update(Uint32 ticks);
 //    const Frame* getFrame() const {
 //      return frames[currentFrame];
@@ -54,9 +60,9 @@ protected:
   int frameWidth;
   int frameHeight;
 
+
   std::vector<CollisionStrategy*> strategies;
   CollisionStrategy * strategy;
-
 
   virtual void advanceFrame(Uint32 ticks);
   virtual void move(Uint32 ticks);

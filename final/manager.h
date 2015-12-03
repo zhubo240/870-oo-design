@@ -65,6 +65,7 @@ private:
 
   SDLSound sound;
 
+  bool isGod;
 
   void draw() const;
   void update();

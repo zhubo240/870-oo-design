@@ -10,7 +10,7 @@
 #include "ioManager.h"
 
 EnemyPool::EnemyPool(const Drawable* player) : isVisiable(true), enemies(),
-freeList(), viewport(Viewport::getInstance()), player(player)
+freeList(),  player(player), viewport(Viewport::getInstance()), numEnemies(1)
 {
 }
 
@@ -33,6 +33,7 @@ void EnemyPool::reset(){
 
 
 EnemyPool& EnemyPool::getInstance(const Drawable* player){
+	//TODO:
 	static EnemyPool pool(player);
 	return pool;
 }
@@ -94,7 +95,7 @@ void EnemyPool::update(Uint32 ticks) {
 	}
 
 	if(this->enemies.size() < 3){
-//		std::cout << "create enemy" << std::endl;
+		std::cout << "create enemy" << std::endl;
 		this->createEnemy();
 
 //		std::cout << "enemy num is " << this->enemies.size() << std::endl;

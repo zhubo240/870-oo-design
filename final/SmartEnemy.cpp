@@ -7,6 +7,7 @@
 
 #include "SmartEnemy.h"
 #include "gamedata.h"
+#include "ExplodingMultiSprite.h"dd
 
 SmartEnemy::SmartEnemy(const string& name, const Drawable* target) :
 		MultiSprite(name), target(target), aimDis(
@@ -21,6 +22,23 @@ void SmartEnemy::init(const Vector2f pos){
 
 bool SmartEnemy::getIsVisiable(){
 	return this->isVisiable;
+}
+
+
+void SmartEnemy::update(Uint32 ticks) {
+	if (explosion) {
+//		std::cout << "multisprite update" << std::endl;
+		explosion->update(ticks);
+		if (explosion->chunkCount() == 0) {
+			delete explosion;
+			explosion = NULL;
+			this->isVisiable = false;
+		}
+		return;
+	}
+
+	advanceFrame(ticks);
+	move(ticks);
 }
 
 
@@ -42,7 +60,7 @@ void SmartEnemy::move(Uint32 ticks) {
 					- this->getPosition();
 
 			float ratio = v / diffPos.magnitude();
-			std::cout << diffPos[0] << ", " << diffPos[0] << ", " << ratio << std::endl;
+//			std::cout << diffPos[0] << ", " << diffPos[0] << ", " << ratio << std::endl;
 			this->setVelocity(ratio * diffPos);
 		}
 	}

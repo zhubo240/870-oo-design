@@ -31,6 +31,12 @@ public:
   Uint16 getWidth()  const { return width; }
   Uint16 getHeight() const { return height; }
 
+  void setWidth(Uint16 w){
+	  this->width = w;
+  }
+  void setHeight(Uint16 h){
+	  this->height = h;
+  }
   Uint16 getSourceX() const { return sourceX; }
   Uint16 getSourceY() const { return sourceY; }
 

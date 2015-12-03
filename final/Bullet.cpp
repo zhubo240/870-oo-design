@@ -6,6 +6,7 @@
  */
 
 #include "Bullet.h"
+#include "frameFactory.h"
 
 Bullet::Bullet(const std::string name, const Vector2f& pos, const Vector2f& vel,
 		float zoom) :
@@ -13,12 +14,20 @@ Bullet::Bullet(const std::string name, const Vector2f& pos, const Vector2f& vel,
 				Gamedata::getInstance().getXmlInt("world/width")), worldHeight(
 				Gamedata::getInstance().getXmlInt("world/height")), isVisiable(
 				true), screen(IOManager::getInstance().getScreen()) {
+	initCollision();
 }
 
 Bullet::Bullet(const Bullet& bullet) : Drawable(bullet), worldWidth(
 		bullet.worldWidth), worldHeight(bullet.worldHeight), isVisiable(
 		bullet.isVisiable), screen(bullet.screen){
 
+}
+
+const Frame* Bullet::getFrame() const {
+	Frame* frame = FrameFactory::getInstance().getFrame("food");
+	frame->setHeight(20);
+	frame->setWidth(20);
+	return frame;
 }
 
 Bullet& Bullet::operator=(const Bullet& bullet){
@@ -69,4 +78,16 @@ void Bullet::setIsVisiable(bool v) {
 
 bool Bullet::getIsVisiable() {
 	return this->isVisiable;
+}
+
+bool Bullet::collidedWith(const Drawable* d) const {
+  return strategy->execute(*this, *d);
+}
+
+
+void Bullet::initCollision() {
+		  this->strategies.push_back(new RectangularCollisionStrategy());
+		  this->strategies.push_back(new MidPointCollisionStrategy());
+		  this->strategies.push_back(new PerPixelCollisionStrategy());
+		  this->strategy = this->strategies[0];
 }

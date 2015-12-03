@@ -18,6 +18,7 @@ public:
 	bool getIsVisiable();
 	void setIsVisiable(bool v);
 	void init(const Vector2f v);
+	virtual void update(Uint32 ticks);
 
 protected:
 	virtual void move(Uint32 ticks);

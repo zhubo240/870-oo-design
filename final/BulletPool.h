@@ -24,6 +24,7 @@ public:
 	void draw();
 	void update(Uint32 ticks);
 	void createBullet(int x, int y, int vx, int vy);
+	std::list<Bullet*> getBullets(){return bullets;};
 	void reset();
 	void drawMsg();
 

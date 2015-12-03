@@ -28,7 +28,17 @@ public:
 		return this->enemies;
 	}
 
+	int getNumEnemies() const {
+		return numEnemies;
+	}
+
+	void setNumEnemies(int numEnemies) {
+		this->numEnemies = numEnemies;
+	}
+
+
 	bool isVisiable;
+
 
 private:
 	EnemyPool(const Drawable& player);
@@ -39,6 +49,10 @@ private:
 
 	const Drawable* const player;
 	const Viewport& viewport;
+
+	int numEnemies;
+
+
 };
 
 #endif /* ENEMYPOOL_H_ */
